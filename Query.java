@@ -111,13 +111,14 @@ public class Query {
    * flights table. You should clear any tables you use to store reservations and reset the next
    * reservation ID to be 1.
    */
-  public void clearTables() {
-    try {
 
-    } catch (SQLException e) {
-      clearTables();
-    }
-  }
+  // public void clearTables() {
+  //   try {
+  //
+  //   } catch (SQLException e) {
+  //     clearTables();
+  //   }
+  // }
 
   /**
    * prepare all the SQL statements in this method. "preparing" a statement is almost like compiling
@@ -127,7 +128,7 @@ public class Query {
     beginTransactionStatement = conn.prepareStatement(BEGIN_TRANSACTION_SQL);
     commitTransactionStatement = conn.prepareStatement(COMMIT_SQL);
     rollbackTransactionStatement = conn.prepareStatement(ROLLBACK_SQL);
-    checkCreStatement = conn.prepareStatement(CHECK_CREATE);
+    checkCreateStatement = conn.prepareStatement(CHECK_CREATE);
 
     /* add here more prepare statements for all the other queries you need */
     /* . . . . . . */
@@ -142,13 +143,13 @@ public class Query {
    *     errors, return "Login failed\n".
    *     <p>Otherwise, return "Logged in as [username]\n".
    */
-  public String transaction_login(String username, String password) {
-    try {
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return "Login failed\n";
-  }
+  // public String transaction_login(String username, String password) {
+  //   try {
+  //   } catch (SQLException e) {
+  //     e.printStackTrace();
+  //   }
+  //   return "Login failed\n";
+  // }
 
   /**
    * Implement the create user function.
@@ -160,8 +161,8 @@ public class Query {
    */
   public String createUser(String username, String password, String Email) {
     try {
-      ResultSet Check = checkCreaStatement.executeQuery();
-      while (emailCheck.next()) {
+      ResultSet Check = checkCreateStatement.executeQuery();
+      while (Check.next()) {
         String allEmails = Check.getString("Email");
         String allUsers = Check.getString("username");
         if (allEmails.equals(Email)) {
@@ -325,14 +326,14 @@ public class Query {
    * Shows an example of using PreparedStatements after setting arguments. You don't need to use
    * this method if you don't want to.
    */
-  private int checkFlightCapacity(int fid) throws SQLException {
-    checkFlightCapacityStatement.clearParameters();
-    checkFlightCapacityStatement.setInt(1, fid);
-    ResultSet results = checkFlightCapacityStatement.executeQuery();
-    results.next();
-    int capacity = results.getInt("capacity");
-    results.close();
-
-    return capacity;
-  }
+  // private int checkFlightCapacity(int fid) throws SQLException {
+  //   checkFlightCapacityStatement.clearParameters();
+  //   checkFlightCapacityStatement.setInt(1, fid);
+  //   ResultSet results = checkFlightCapacityStatement.executeQuery();
+  //   results.next();
+  //   int capacity = results.getInt("capacity");
+  //   results.close();
+  //
+  //   return capacity;
+  // }
 }
