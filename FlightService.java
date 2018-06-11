@@ -14,8 +14,7 @@ public class FlightService {
     System.out.println(" *** Please enter one of the following commands *** ");
     System.out.println("> create <username> <password> <Email-ID>");
     System.out.println("> login <username> <password>");
-    System.out.println(
-        "> search <origin city> <destination city> <direct> <day of the month> <num itineraries>");
+    System.out.println("> logout");
     System.out.println("> book <itinerary id>");
     System.out.println("> pay <reservation id>");
     System.out.println("> reservations");
