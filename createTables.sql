@@ -3,6 +3,11 @@ CREATE TABLE USER(
   password VARCHAR(50)
 );
 
+CREATE TABLE userEmail(
+  username varChar(30),
+  Email varchar(30) PRIMARY KEY
+)
+
 CREATE TABLE PROJECT(
   ID INT PRIMARY KEY,
   creator VARCHAR(30),
