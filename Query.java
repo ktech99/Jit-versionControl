@@ -177,6 +177,9 @@ public class Query {
   }
 
   public String logOut() {
+    if (this.username == null) {
+      return "No one logged in\n";
+    }
     this.username = null;
     return "Log out successful\n";
   }
@@ -192,7 +195,7 @@ public class Query {
   public String createUser(String username, String password, String Email) {
     try {
       if (!Email.contains("@")) {
-        return "invalid email";
+        return "invalid email\n";
       }
       beginTransaction();
       ResultSet Check = checkCreateStatement.executeQuery();
@@ -200,10 +203,10 @@ public class Query {
         String allEmails = Check.getString("Email");
         String allUsers = Check.getString("username");
         if (allEmails.equals(Email)) {
-          return "Email already in use";
+          return "Email already in use\n";
         }
         if (allUsers.equals(username)) {
-          return "Username already in use";
+          return "Username already in use\n";
         }
       }
       Check.close();
