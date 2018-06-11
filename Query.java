@@ -155,7 +155,7 @@ public class Query {
   public String loginUser(String username, String password) {
     if (this.username != null) {
       System.out.println(this.username);
-      return "already logged in";
+      return "already logged in\n";
     }
     try {
       CheckLoginStatement.clearParameters();
@@ -170,14 +170,15 @@ public class Query {
         return "Logged in as " + username + "\n";
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      // e.printStackTrace();
+      return "Login failed\n";
     }
-    return "Login failed\n";
+    //  return "Login failed\n";
   }
 
   public String logOut() {
     this.username = null;
-    return "Log out successful";
+    return "Log out successful\n";
   }
 
   /**
