@@ -156,11 +156,10 @@ public class Query {
    *
    * @param username new user's username. User names are unique the system.
    * @param password new user's password.
-   * @param initAmount initial amount to deposit into the user's account, should be >= 0 (failure
-   *     otherwise).
+   * @param Email new user's Email, has to has @. Email is unique to a user
    * @return either "Created user {@code username}\n" or "Failed to create user\n" if failed.
    */
-  public String transaction_createCustomer(String username, String password) {}
+  public String createUser(String username, String password, String Email) {}
 
   /**
    * Same as {@code transaction_search} except that it only performs single hop search and do it in
