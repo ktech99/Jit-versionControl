@@ -36,7 +36,6 @@ public class FlightService {
 
   public static String execute(Query q, String command) {
     String response;
-
     String[] tokens = tokenize(command.trim());
     if (tokens.length == 0) response = "Please enter a command";
     else if (tokens[0].equals("login")) {
@@ -54,52 +53,35 @@ public class FlightService {
         String email = tokens[3];
         response = q.createUser(username, password, email);
       } else response = "Error: Please provide a username, password, and email for the account";
-    } else if (tokens[0].equals("search")) {
-      /* search for flights */
-      if (tokens.length == 6) {
-        String originCity = tokens[1];
-        String destinationCity = tokens[2];
-        boolean direct = tokens[3].equals("1");
-        Integer day;
-        Integer count;
-        try {
-          day = Integer.valueOf(tokens[4]);
-          count = Integer.valueOf(tokens[5]);
-          // System.out.println("Searching for flights");
-          // response = q.transaction_search_unsafe(originCity, destinationCity, direct, day,
-          // count);
-          response = q.transaction_search(originCity, destinationCity, direct, day, count);
-        } catch (NumberFormatException e) {
-          response = "Failed to parse integer";
-        }
-      } else
-        response =
-            "Error: Please provide all search parameters <origin_city> <destination_city> <direct> <date> <nb itineraries>";
-    } else if (tokens[0].equals("book")) {
-      /* book a flight ticket */
-      if (tokens.length == 2) {
-        int itinerary_id = Integer.parseInt(tokens[1]);
-        // System.out.println("Booking itinerary.");
-        response = q.transaction_book(itinerary_id);
-      } else response = "Error: Please provide an itinerary_id";
-    } else if (tokens[0].equals("reservations")) {
-      /* list all reservations */
-      response = q.transaction_reservations();
-    } else if (tokens[0].equals("pay")) {
-      /* pay for an unpaid reservation */
-      if (tokens.length == 2) {
-        int reservation_id = Integer.parseInt(tokens[1]);
-        // System.out.println("Paying reservation.");
-        response = q.transaction_pay(reservation_id);
-      } else response = "Error: Please provide a reservation_id";
-    } else if (tokens[0].equals("cancel")) {
-      /* cancel a reservation */
-      if (tokens.length == 2) {
-        int reservation_id = Integer.parseInt(tokens[1]);
-        // System.out.println("Canceling reservation.");
-        response = q.transaction_cancel(reservation_id);
-      } else response = "Error: Please provide a reservation_id";
-    } else if (tokens[0].equals("quit")) response = "Goodbye\n";
+    } else if (tokens[0].equals("logout")) {
+      response = q.logOut();
+    }
+    // } else if (tokens[0].equals("book")) {
+    //   /* book a flight ticket */
+    //   if (tokens.length == 2) {
+    //     int itinerary_id = Integer.parseInt(tokens[1]);
+    //     // System.out.println("Booking itinerary.");
+    //     response = q.transaction_book(itinerary_id);
+    //   } else response = "Error: Please provide an itinerary_id";
+    // } else if (tokens[0].equals("reservations")) {
+    //   /* list all reservations */
+    //   response = q.transaction_reservations();
+    // } else if (tokens[0].equals("pay")) {
+    //   /* pay for an unpaid reservation */
+    //   if (tokens.length == 2) {
+    //     int reservation_id = Integer.parseInt(tokens[1]);
+    //     // System.out.println("Paying reservation.");
+    //     response = q.transaction_pay(reservation_id);
+    //   } else response = "Error: Please provide a reservation_id";
+    // } else if (tokens[0].equals("cancel")) {
+    //   /* cancel a reservation */
+    //   if (tokens.length == 2) {
+    //     int reservation_id = Integer.parseInt(tokens[1]);
+    //     // System.out.println("Canceling reservation.");
+    //     response = q.transaction_cancel(reservation_id);
+    //   } else response = "Error: Please provide a reservation_id";
+    // }
+    else if (tokens[0].equals("quit")) response = "Goodbye\n";
     else response = "Error: unrecognized command '" + tokens[0] + "'";
 
     return response;

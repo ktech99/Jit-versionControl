@@ -25,11 +25,11 @@ public class Query {
 
   private static final String CHECK_CREATE = "SELECT username, Email FROM userEmail";
   private PreparedStatement checkCreateStatement;
-  private static final String CREATE_USER = "INSERT INTO USER VALUES(?, ?)";
+  private static final String CREATE_USER = "INSERT INTO USERS VALUES(?, ?)";
   private PreparedStatement createUserStatement;
-  private static final String CREATE_USER_EMAIL = "INSERT INTO UerEmail VALUES(?, ?)";
+  private static final String CREATE_USER_EMAIL = "INSERT INTO UserEmail VALUES(?, ?)";
   private PreparedStatement createUserEmailStatement;
-  private static final String CHECK_LOGIN = "SELECT ?, password FROM USER";
+  private static final String CHECK_LOGIN = "SELECT ?, password FROM USERS";
   private PreparedStatement CheckLoginStatement;
 
   // transactions
@@ -153,7 +153,8 @@ public class Query {
    *     <p>Otherwise, return "Logged in as [username]\n".
    */
   public String loginUser(String username, String password) {
-    if (username != null) {
+    if (this.username != null) {
+      System.out.println(this.username);
       return "already logged in";
     }
     try {
@@ -165,13 +166,18 @@ public class Query {
       if (!pass.equals(password)) { // TODO update for hash
         return "incorrect password\n";
       } else {
-        username = this.username;
+        this.username = username;
         return "Logged in as " + username + "\n";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
     return "Login failed\n";
+  }
+
+  public String logOut() {
+    this.username = null;
+    return "Log out successful";
   }
 
   /**
@@ -208,6 +214,7 @@ public class Query {
       createUserEmailStatement.setString(2, Email);
       createUserStatement.executeUpdate();
       createUserEmailStatement.executeUpdate();
+      return "Created user " + username + "\n";
     } catch (SQLException e) {
       try {
         rollbackTransaction();
@@ -217,7 +224,6 @@ public class Query {
       e.printStackTrace();
       return "Failed to Create User\n";
     }
-    return "Failed to Create User\n";
   }
 
   /**
