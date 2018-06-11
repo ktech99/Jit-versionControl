@@ -44,7 +44,7 @@ public class FlightService {
         /* authenticate the user */
         String username = tokens[1];
         String password = tokens[2];
-        response = q.transaction_login(username, password);
+        response = q.loginUser(username, password);
       } else response = "Error: Please provide a username and password";
     } else if (tokens[0].equals("create")) {
       /* create a new customer */

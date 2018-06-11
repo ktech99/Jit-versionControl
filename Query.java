@@ -29,6 +29,8 @@ public class Query {
   private PreparedStatement createUserStatement;
   private static final String CREATE_USER_EMAIL = "INSERT INTO UerEmail VALUES(?, ?)";
   private PreparedStatement createUserEmailStatement;
+  private static final String CHECK_LOGIN = "SELECT ?, password FROM USER";
+  private PreparedStatement CheckLoginStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -138,6 +140,7 @@ public class Query {
     checkCreateStatement = conn.prepareStatement(CHECK_CREATE);
     createUserStatement = conn.prepareStatement(CREATE_USER);
     createUserEmailStatement = conn.prepareStatement(CREATE_USER_EMAIL);
+    CheckLoginStatement = conn.prepareStatement(CHECK_LOGIN);
   }
 
   /**
@@ -149,13 +152,27 @@ public class Query {
    *     errors, return "Login failed\n".
    *     <p>Otherwise, return "Logged in as [username]\n".
    */
-  // public String transaction_login(String username, String password) {
-  //   try {
-  //   } catch (SQLException e) {
-  //     e.printStackTrace();
-  //   }
-  //   return "Login failed\n";
-  // }
+  public String loginUser(String username, String password) {
+    if (username != null) {
+      return "already logged in";
+    }
+    try {
+      CheckLoginStatement.clearParameters();
+      CheckLoginStatement.setString(1, this.username);
+      ResultSet passwordSet = CheckLoginStatement.executeQuery();
+      passwordSet.next();
+      String pass = passwordSet.getString("password");
+      if (!pass.equals(password)) { // TODO update for hash
+        return "incorrect password\n";
+      } else {
+        username = this.username;
+        return "Logged in as " + username + "\n";
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return "Login failed\n";
+  }
 
   /**
    * Implement the create user function.
@@ -189,6 +206,8 @@ public class Query {
       createUserEmailStatement.clearParameters();
       createUserEmailStatement.setString(1, username);
       createUserEmailStatement.setString(2, Email);
+      createUserStatement.executeUpdate();
+      createUserEmailStatement.executeUpdate();
     } catch (SQLException e) {
       try {
         rollbackTransaction();
@@ -344,19 +363,4 @@ public class Query {
     rollbackTransactionStatement.executeUpdate();
     conn.setAutoCommit(true);
   }
-
-  /**
-   * Shows an example of using PreparedStatements after setting arguments. You don't need to use
-   * this method if you don't want to.
-   */
-  // private int checkFlightCapacity(int fid) throws SQLException {
-  //   checkFlightCapacityStatement.clearParameters();
-  //   checkFlightCapacityStatement.setInt(1, fid);
-  //   ResultSet results = checkFlightCapacityStatement.executeQuery();
-  //   results.next();
-  //   int capacity = results.getInt("capacity");
-  //   results.close();
-  //
-  //   return capacity;
-  // }
 }
