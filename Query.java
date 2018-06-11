@@ -167,6 +167,9 @@ public class Query {
    */
   public String createUser(String username, String password, String Email) {
     try {
+      if (!Email.contains("@")) {
+        return "invalid email";
+      }
       beginTransaction();
       ResultSet Check = checkCreateStatement.executeQuery();
       while (Check.next()) {
