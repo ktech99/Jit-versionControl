@@ -1,4 +1,5 @@
 import java.io.FileInputStream;
+import java.security.MessageDigest;
 import java.sql.*;
 import java.util.*;
 import java.util.Properties;
@@ -163,7 +164,8 @@ public class Query {
       ResultSet passwordSet = CheckLoginStatement.executeQuery();
       passwordSet.next();
       String pass = passwordSet.getString("password");
-      if (!pass.equals(password)) { // TODO update for hash
+      password = applyHash(password);
+      if (!pass.equals(password)) {
         return "incorrect password\n";
       } else {
         this.username = username;
@@ -212,7 +214,8 @@ public class Query {
       Check.close();
       createUserStatement.clearParameters();
       createUserStatement.setString(1, username);
-      createUserStatement.setString(2, password); // TODO hash the password
+      password = applyHash(password);
+      createUserStatement.setString(2, password);
       createUserEmailStatement.clearParameters();
       createUserEmailStatement.setString(1, username);
       createUserEmailStatement.setString(2, Email);
@@ -297,5 +300,27 @@ public class Query {
   public void rollbackTransaction() throws SQLException {
     rollbackTransactionStatement.executeUpdate();
     conn.setAutoCommit(true);
+  }
+
+  private static String applyHash(String input) {
+    try {
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      byte[] hash = digest.digest(input.getBytes("UTF-8"));
+      return bytesToHex(hash);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private static String bytesToHex(byte[] hash) {
+    StringBuffer hexString = new StringBuffer();
+    for (int i = 0; i < hash.length; i++) {
+      String hex = Integer.toHexString(0xff & hash[i]);
+      if (hex.length() == 1) {
+        hexString.append('0');
+      }
+      hexString.append(hex);
+    }
+    return hexString.toString();
   }
 }

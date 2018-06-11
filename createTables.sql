@@ -1,6 +1,6 @@
-CREATE TABLE USER(
+CREATE TABLE USERS(
   username VARCHAR(30) PRIMARY KEY,
-  password VARCHAR(50)
+  password text
 );
 
 CREATE TABLE userEmail(
