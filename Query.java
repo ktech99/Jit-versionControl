@@ -23,9 +23,8 @@ public class Query {
 
   // Canned queries
 
-  private static final String CHECK_FLIGHT_CAPACITY =
-      "SELECT capacity FROM FlightCapacity WHERE fid = ?";
-  private PreparedStatement checkFlightCapacityStatement;
+  private static final String CHECK_CREATE = "SELECT username, Email FROM userEmail";
+  private PreparedStatement checkCreateStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -128,7 +127,7 @@ public class Query {
     beginTransactionStatement = conn.prepareStatement(BEGIN_TRANSACTION_SQL);
     commitTransactionStatement = conn.prepareStatement(COMMIT_SQL);
     rollbackTransactionStatement = conn.prepareStatement(ROLLBACK_SQL);
-    checkFlightCapacityStatement = conn.prepareStatement(CHECK_FLIGHT_CAPACITY);
+    checkCreStatement = conn.prepareStatement(CHECK_CREATE);
 
     /* add here more prepare statements for all the other queries you need */
     /* . . . . . . */
@@ -159,7 +158,24 @@ public class Query {
    * @param Email new user's Email, has to has @. Email is unique to a user
    * @return either "Created user {@code username}\n" or "Failed to create user\n" if failed.
    */
-  public String createUser(String username, String password, String Email) {}
+  public String createUser(String username, String password, String Email) {
+    try {
+      ResultSet Check = checkCreaStatement.executeQuery();
+      while (emailCheck.next()) {
+        String allEmails = Check.getString("Email");
+        String allUsers = Check.getString("username");
+        if (allEmails.equals(Email)) {
+          return "Email already in use";
+        }
+        if (allUsers.equals(username)) {
+          return "Username already in use";
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return "Failed to Create User\n";
+  }
 
   /**
    * Same as {@code transaction_search} except that it only performs single hop search and do it in
