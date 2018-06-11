@@ -53,8 +53,7 @@ public class FlightService {
         String password = tokens[2];
         String email = tokens[3];
         response = q.createUser(username, password, email);
-      } else
-        response = "Error: Please provide a username, password, and initial amount in the account";
+      } else response = "Error: Please provide a username, password, and email for the account";
     } else if (tokens[0].equals("search")) {
       /* search for flights */
       if (tokens.length == 6) {
