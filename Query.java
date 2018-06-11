@@ -25,6 +25,10 @@ public class Query {
 
   private static final String CHECK_CREATE = "SELECT username, Email FROM userEmail";
   private PreparedStatement checkCreateStatement;
+  private static final String CREATE_USER = "INSERT INTO USER VALUES(?, ?)";
+  private PreparedStatement createUserStatement;
+  private static final String CREATE_USER_EMAIL = "INSERT INTO UerEmail VALUES(?, ?)";
+  private PreparedStatement createUserEmailStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -128,10 +132,12 @@ public class Query {
     beginTransactionStatement = conn.prepareStatement(BEGIN_TRANSACTION_SQL);
     commitTransactionStatement = conn.prepareStatement(COMMIT_SQL);
     rollbackTransactionStatement = conn.prepareStatement(ROLLBACK_SQL);
-    checkCreateStatement = conn.prepareStatement(CHECK_CREATE);
 
     /* add here more prepare statements for all the other queries you need */
     /* . . . . . . */
+    checkCreateStatement = conn.prepareStatement(CHECK_CREATE);
+    createUserStatement = conn.prepareStatement(CREATE_USER);
+    createUserEmailStatement = conn.prepareStatement(CREATE_USER_EMAIL);
   }
 
   /**
@@ -161,6 +167,7 @@ public class Query {
    */
   public String createUser(String username, String password, String Email) {
     try {
+      beginTransaction();
       ResultSet Check = checkCreateStatement.executeQuery();
       while (Check.next()) {
         String allEmails = Check.getString("Email");
@@ -172,8 +179,21 @@ public class Query {
           return "Username already in use";
         }
       }
+      Check.close();
+      createUserStatement.clearParameters();
+      createUserStatement.setString(1, username);
+      createUserStatement.setString(2, password); // TODO hash the password
+      createUserEmailStatement.clearParameters();
+      createUserEmailStatement.setString(1, username);
+      createUserEmailStatement.setString(2, Email);
     } catch (SQLException e) {
+      try {
+        rollbackTransaction();
+      } catch (SQLException f) {
+        f.printStackTrace();
+      }
       e.printStackTrace();
+      return "Failed to Create User\n";
     }
     return "Failed to Create User\n";
   }
