@@ -32,6 +32,8 @@ public class Query {
   private PreparedStatement createUserEmailStatement;
   private static final String CHECK_LOGIN = "SELECT ?, password FROM USERS";
   private PreparedStatement CheckLoginStatement;
+  private static final String DELETE_PROJECT = "Delete ID From PROJECT, CODE, VERSION WHERE ID = ?";
+  private PreparedStatement DeleteProjectStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -142,6 +144,7 @@ public class Query {
     createUserStatement = conn.prepareStatement(CREATE_USER);
     createUserEmailStatement = conn.prepareStatement(CREATE_USER_EMAIL);
     CheckLoginStatement = conn.prepareStatement(CHECK_LOGIN);
+    DeleteProjectStatement = conn.prepareStatement(DELETE_PROJECT);
   }
 
   /**
@@ -175,7 +178,6 @@ public class Query {
       // e.printStackTrace();
       return "Login failed\n";
     }
-    //  return "Login failed\n";
   }
 
   public String logOut() {
@@ -233,57 +235,17 @@ public class Query {
     }
   }
 
-  /**
-   * Implements the book itinerary function.
-   *
-   * @param itineraryId ID of the itinerary to book. This must be one that is returned by search in
-   *     the current session.
-   * @return If the user is not logged in, then return "Cannot book reservations, not logged in\n".
-   *     If try to book an itinerary with invalid ID, then return "No such itinerary {@code
-   *     itineraryId}\n". If the user already has a reservation on the same day as the one that they
-   *     are trying to book now, then return "You cannot book two flights in the same day\n". For
-   *     all other errors, return "Booking failed\n".
-   *     <p>And if booking succeeded, return "Booked flight(s), reservation ID: [reservationId]\n"
-   *     where reservationId is a unique number in the reservation system that starts from 1 and
-   *     increments by 1 each time a successful reservation is made by any user in the system.
-   */
-
-  /**
-   * Implements the reservations function.
-   *
-   * @return If no user has logged in, then return "Cannot view reservations, not logged in\n" If
-   *     the user has no reservations, then return "No reservations found\n" For all other errors,
-   *     return "Failed to retrieve reservations\n"
-   *     <p>Otherwise return the reservations in the following format:
-   *     <p>Reservation [reservation ID] paid: [true or false]:\n" [flight 1 under the reservation]
-   *     [flight 2 under the reservation] Reservation [reservation ID] paid: [true or false]:\n"
-   *     [flight 1 under the reservation] [flight 2 under the reservation] ...
-   *     <p>Each flight should be printed using the same format as in the {@code Flight} class.
-   * @see Flight#toString()
-   */
-
-  /**
-   * Implements the cancel operation.
-   *
-   * @param reservationId the reservation ID to cancel
-   * @return If no user has logged in, then return "Cannot cancel reservations, not logged in\n" For
-   *     all other errors, return "Failed to cancel reservation [reservationId]"
-   *     <p>If successful, return "Canceled reservation [reservationId]"
-   *     <p>Even though a reservation has been canceled, its ID should not be reused by the system.
-   */
-
-  /**
-   * Implements the pay function.
-   *
-   * @param reservationId the reservation to pay for.
-   * @return If no user has logged in, then return "Cannot pay, not logged in\n" If the reservation
-   *     is not found / not under the logged in user's name, then return "Cannot find unpaid
-   *     reservation [reservationId] under user: [username]\n" If the user does not have enough
-   *     money in their account, then return "User has only [balance] in account but itinerary costs
-   *     [cost]\n" For all other errors, return "Failed to pay for reservation [reservationId]\n"
-   *     <p>If successful, return "Paid reservation: [reservationId] remaining balance: [balance]\n"
-   *     where [balance] is the remaining balance in the user's account.
-   */
+  public String delete(int projectID) {
+    // TODO check for owner
+    try {
+      DeleteProjectStatement.clearParameters();
+      DeleteProjectStatement.setInt(1, projectID);
+      DeleteProjectStatement.executeUpdate();
+      return "Deleted project " + projectID + "\n";
+    } catch (SQLException e) {
+      return "Failed to delete project\n";
+    }
+  }
 
   /* some utility functions below */
 
