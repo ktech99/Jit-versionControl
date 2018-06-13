@@ -15,7 +15,7 @@ public class FlightService {
     System.out.println("> create <username> <password> <Email-ID>");
     System.out.println("> login <username> <password>");
     System.out.println("> logout");
-    System.out.println("> book <itinerary id>");
+    System.out.println("> add");
     System.out.println("> pay <reservation id>");
     System.out.println("> reservations");
     System.out.println("> cancel <reservation id>");
@@ -54,14 +54,9 @@ public class FlightService {
       } else response = "Error: Please provide a username, password, and email for the account";
     } else if (tokens[0].equals("logout")) {
       response = q.logOut();
+    } else if (tokens[0].equals("add")) {
+      response = q.add();
     }
-    // } else if (tokens[0].equals("book")) {
-    //   /* book a flight ticket */
-    //   if (tokens.length == 2) {
-    //     int itinerary_id = Integer.parseInt(tokens[1]);
-    //     // System.out.println("Booking itinerary.");
-    //     response = q.transaction_book(itinerary_id);
-    //   } else response = "Error: Please provide an itinerary_id";
     // } else if (tokens[0].equals("reservations")) {
     //   /* list all reservations */
     //   response = q.transaction_reservations();
