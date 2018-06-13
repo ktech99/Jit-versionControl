@@ -1,4 +1,4 @@
-import java.io.FileInputStream;
+import java.io.*;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.*;
@@ -257,6 +257,7 @@ public class Query {
         System.out.println("Directory " + listOfFiles[i].getName());
       }
     }
+    return listOfFiles[0].toString();
   }
 
   /* some utility functions below */
