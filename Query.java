@@ -247,6 +247,18 @@ public class Query {
     }
   }
 
+  public String add() {
+    File folder = new File("your/path");
+    File[] listOfFiles = folder.listFiles();
+    for (int i = 0; i < listOfFiles.length; i++) {
+      if (listOfFiles[i].isFile()) {
+        System.out.println("File " + listOfFiles[i].getName());
+      } else if (listOfFiles[i].isDirectory()) {
+        System.out.println("Directory " + listOfFiles[i].getName());
+      }
+    }
+  }
+
   /* some utility functions below */
 
   public void beginTransaction() throws SQLException {
