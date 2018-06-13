@@ -248,7 +248,7 @@ public class Query {
   }
 
   public String add() {
-    File folder = new File("your/path");
+    File folder = new File("").getAbsoluteFile();
     File[] listOfFiles = folder.listFiles();
     for (int i = 0; i < listOfFiles.length; i++) {
       if (listOfFiles[i].isFile()) {
