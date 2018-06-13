@@ -32,7 +32,8 @@ public class Query {
   private PreparedStatement createUserEmailStatement;
   private static final String CHECK_LOGIN = "SELECT ?, password FROM USERS";
   private PreparedStatement CheckLoginStatement;
-  private static final String DELETE_PROJECT = "Delete ID From PROJECT, CODE, VERSION WHERE ID = ?";
+  private static final String DELETE_PROJECT =
+      "Update Project " + "Set creator = null, name = null, CreatedOn = null" + " Where ID = ?";
   private PreparedStatement DeleteProjectStatement;
   private static final String CHECK_OWNER = "SELECT creator From PROJECT where ID = ?";
   private PreparedStatement CheckOwnerStatement;
@@ -242,7 +243,7 @@ public class Query {
     if (this.username == null) {
       return "Please log in\n";
     }
-    // TODO check for owner
+    // TODO check delete code and version
     try {
       CheckOwnerStatement.clearParameters();
       CheckOwnerStatement.setInt(1, projectID);
