@@ -246,8 +246,17 @@ public class Query {
     if (this.username == null) {
       return "Please log in\n";
     }
-    // TODO check delete code and version
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter password:");
+    String password = sc.nextLine();
     try {
+      ResultSet passwordSet = CheckLoginStatement.executeQuery();
+      passwordSet.next();
+      String pass = passwordSet.getString("password");
+      password = applyHash(password);
+      if (!pass.equals(password)) {
+        return "incorrect password\n";
+      }
       CheckOwnerStatement.clearParameters();
       CheckOwnerStatement.setInt(1, projectID);
       DeleteCodestatement.clearParameters();
