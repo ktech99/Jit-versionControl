@@ -35,6 +35,8 @@ public class Query {
   private static final String DELETE_PROJECT =
       "Update Project " + "Set creator = null, name = null, CreatedOn = null" + " Where ID = ?";
   private PreparedStatement DeleteProjectStatement;
+  private static final String DELETE_CODE = "Delete From Code, version " + " Where ID = ?";
+  private PreparedStatement DeleteCodestatement;
   private static final String CHECK_OWNER = "SELECT creator From PROJECT where ID = ?";
   private PreparedStatement CheckOwnerStatement;
 
@@ -148,6 +150,7 @@ public class Query {
     createUserEmailStatement = conn.prepareStatement(CREATE_USER_EMAIL);
     CheckLoginStatement = conn.prepareStatement(CHECK_LOGIN);
     DeleteProjectStatement = conn.prepareStatement(DELETE_PROJECT);
+    DeleteCodestatement = conn.prepareStatement(DELETE_CODE);
     CheckOwnerStatement = conn.prepareStatement(CHECK_OWNER);
   }
 
@@ -247,7 +250,10 @@ public class Query {
     try {
       CheckOwnerStatement.clearParameters();
       CheckOwnerStatement.setInt(1, projectID);
+      DeleteCodestatement.clearParameters();
+      DeleteCodestatement.setInt(1, projectID);
       ResultSet owner = CheckOwnerStatement.executeQuery();
+      DeleteCodestatement.executeUpdate();
       owner.next();
       if (!this.username.equals(owner.getString())) {
         return "Cannot Delete this project. Not the owner!\n";
