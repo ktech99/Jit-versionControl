@@ -34,6 +34,8 @@ public class Query {
   private PreparedStatement CheckLoginStatement;
   private static final String DELETE_PROJECT = "Delete ID From PROJECT, CODE, VERSION WHERE ID = ?";
   private PreparedStatement DeleteProjectStatement;
+  private static final String CHECK_OWNER = "SELECT creator From PROJECT where ID = ?";
+  private PreparedStatement CheckOwnerStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -145,6 +147,7 @@ public class Query {
     createUserEmailStatement = conn.prepareStatement(CREATE_USER_EMAIL);
     CheckLoginStatement = conn.prepareStatement(CHECK_LOGIN);
     DeleteProjectStatement = conn.prepareStatement(DELETE_PROJECT);
+    CheckOwnerStatement = conn.prepareStatement(CHECK_OWNER);
   }
 
   /**
@@ -236,8 +239,18 @@ public class Query {
   }
 
   public String delete(int projectID) {
+    if (this.username == null) {
+      return "Please log in\n";
+    }
     // TODO check for owner
     try {
+      CheckOwnerStatement.clearParameters();
+      CheckOwnerStatement.setInt(1, projectID);
+      ResultSet owner = CheckOwnerStatement.executeQuery();
+      owner.next();
+      if (!this.username.equals(owner.getString())) {
+        return "Cannot Delete this project. Not the owner!\n";
+      }
       DeleteProjectStatement.clearParameters();
       DeleteProjectStatement.setInt(1, projectID);
       DeleteProjectStatement.executeUpdate();
