@@ -279,7 +279,8 @@ public class Query {
     }
   }
 
-  // TODO
+  // TODO not consider directories and file names that end with .jit
+  // Figure out seperator for each file, or have multiple files with file names
   public String add() {
     File folder = new File("").getAbsoluteFile();
     File[] listOfFiles = folder.listFiles();
