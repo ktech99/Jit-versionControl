@@ -39,6 +39,8 @@ public class Query {
   private PreparedStatement DeleteCodestatement;
   private static final String CHECK_OWNER = "SELECT creator From PROJECT where ID = ?";
   private PreparedStatement CheckOwnerStatement;
+  private static final String GET_PROJECTS = "SELECT ID, name FROM PROJECT WHERE Creator = ?";
+  private PreparedStatement GetProjectStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -152,6 +154,7 @@ public class Query {
     DeleteProjectStatement = conn.prepareStatement(DELETE_PROJECT);
     DeleteCodestatement = conn.prepareStatement(DELETE_CODE);
     CheckOwnerStatement = conn.prepareStatement(CHECK_OWNER);
+    GetProjectStatement = conn.prepareStatement(GET_PROJECTS);
   }
 
   /**
@@ -264,7 +267,7 @@ public class Query {
       ResultSet owner = CheckOwnerStatement.executeQuery();
       DeleteCodestatement.executeUpdate();
       owner.next();
-      if (!this.username.equals(owner.getString())) {
+      if (!this.username.equals(owner.getString("creator"))) {
         return "Cannot Delete this project. Not the owner!\n";
       }
       DeleteProjectStatement.clearParameters();
@@ -276,6 +279,7 @@ public class Query {
     }
   }
 
+  // TODO
   public String add() {
     File folder = new File("").getAbsoluteFile();
     File[] listOfFiles = folder.listFiles();
@@ -287,6 +291,22 @@ public class Query {
       }
     }
     return listOfFiles[0].toString();
+  }
+
+  // TODO check if user is logged in
+  public String view() {
+    String projectsString = "ID\tName\n";
+    try {
+      GetProjectStatement.clearParameters();
+      GetProjectStatement.setString(1, this.username);
+      ResultSet projects = GetProjectStatement.executeQuery();
+      while (projects.next()) {
+        projectsString += projects.getString("ID") + "\t" + projects.getString("name") + "\n";
+      }
+    } catch (SQLException e) {
+      return "Unable to locate projects";
+    }
+    return projectsString;
   }
 
   /* some utility functions below */
