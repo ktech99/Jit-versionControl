@@ -295,6 +295,9 @@ public class Query {
 
   // TODO check if user is logged in
   public String view() {
+    if (this.username == null) {
+      return "Please log in\n";
+    }
     String projectsString = "ID\tName\n";
     try {
       GetProjectStatement.clearParameters();
