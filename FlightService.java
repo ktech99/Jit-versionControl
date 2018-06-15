@@ -16,7 +16,7 @@ public class FlightService {
     System.out.println("> login <username> <password>");
     System.out.println("> logout");
     System.out.println("> add");
-    System.out.println("> pay <reservation id>");
+    System.out.println("> view");
     System.out.println("> reservations");
     System.out.println("> cancel <reservation id>");
     System.out.println("> quit");
@@ -56,6 +56,8 @@ public class FlightService {
       response = q.logOut();
     } else if (tokens[0].equals("add")) {
       response = q.add();
+    } else if (tokens[0].equals("view")) {
+      response = q.view();
     }
     // } else if (tokens[0].equals("reservations")) {
     //   /* list all reservations */
