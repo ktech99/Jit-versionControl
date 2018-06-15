@@ -18,7 +18,7 @@ public class FlightService {
     System.out.println("> add");
     System.out.println("> view");
     System.out.println("> reservations");
-    System.out.println("> cancel <reservation id>");
+    System.out.println("> delete <project id>");
     System.out.println("> quit");
   }
 
@@ -57,6 +57,14 @@ public class FlightService {
     } else if (tokens[0].equals("add")) {
       response = q.add();
     } else if (tokens[0].equals("view")) {
+      response = q.view();
+    } else if (tokens[0].equals("delete")) {
+      if (tokens.length == 2) {
+        int project_id = Integer.parseInt(tokens[1]);
+        response = q.transaction_cancel(project_id);
+      } else {
+        response = "Error: Please provide a project_id";
+      }
       response = q.view();
     }
     // } else if (tokens[0].equals("reservations")) {
