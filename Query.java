@@ -283,10 +283,11 @@ public class Query {
   // Figure out seperator for each file, or have multiple files with file names
   public String add() {
     File folder = new File("").getAbsoluteFile();
-    File[] listOfFiles = folder.listFiles();
+    List<File> listOfFiles = new ArrayList<File>();
+    listOfFiles = Arrays.asList(folder.listFiles());
     for (int i = 0; i < listOfFiles.length; i++) {
-      if (listOfFiles[i].isFile()) {
-        System.out.println("File " + listOfFiles[i].getName());
+      if (listOfFiles[i].isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
+        System.out.println("File " + listOfFiles.get(i).getName());
       } else if (listOfFiles[i].isDirectory()) {
         System.out.println("Directory " + listOfFiles[i].getName());
       }
@@ -294,7 +295,6 @@ public class Query {
     return listOfFiles[0].toString();
   }
 
-  // TODO check if user is logged in
   public String view() {
     if (this.username == null) {
       return "Please log in\n";
@@ -330,6 +330,7 @@ public class Query {
     conn.setAutoCommit(true);
   }
 
+  // To create a hash of the password
   private static String applyHash(String input) {
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
