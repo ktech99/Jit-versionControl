@@ -285,6 +285,14 @@ public class Query {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new ArrayList<File>();
     listOfFiles = Arrays.asList(folder.listFiles());
+    Iterator<File> F = listOfFiles.iterator();
+    while (F.hasNext()) {
+      if (F.isFile() && F.getName().endsWith(".jit")) {
+        System.out.println("File " + F.getName());
+      } else if (F.isDirectory()) {
+        F.remove();
+      }
+    }
     for (int i = 0; i < listOfFiles.size(); i++) {
       if (listOfFiles.get(i).isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
         System.out.println("File " + listOfFiles.get(i).getName());
