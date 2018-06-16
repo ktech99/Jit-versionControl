@@ -287,9 +287,9 @@ public class Query {
     Iterator<File> F = listOfFiles.iterator();
     while (F.hasNext()) {
       File file = F.next();
-      if (file.isFile() && file.getName().endsWith(".jit")) {
+      if (file.isFile()) {
         System.out.println("File " + file.getName());
-      } else if (file.isDirectory()) {
+      } else if (file.isDirectory() || file.getName().endsWith(".jit")) {
         F.remove();
       }
     }
