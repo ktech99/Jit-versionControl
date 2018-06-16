@@ -289,7 +289,7 @@ public class Query {
       if (listOfFiles.get(i).isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
         System.out.println("File " + listOfFiles.get(i).getName());
       } else if (listOfFiles.get(i).isDirectory()) {
-        System.out.println("Directory " + listOfFiles.get(i).getName());
+        listOfFiles.remove(i);
       }
     }
     return listOfFiles.get(0).toString();
