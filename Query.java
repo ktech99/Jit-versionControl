@@ -294,14 +294,7 @@ public class Query {
         F.remove();
       }
     }
-    // for (int i = 0; i < listOfFiles.size(); i++) {
-    //   if (listOfFiles.get(i).isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
-    //     System.out.println("File " + listOfFiles.get(i).getName());
-    //   } else if (listOfFiles.get(i).isDirectory()) {
-    //     listOfFiles.remove(i);
-    //   }
-    // }
-    return listOfFiles.get(0).toString();
+    return "Files added";
   }
 
   public String view() {
