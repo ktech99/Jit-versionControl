@@ -319,9 +319,13 @@ public class Query {
     return "Files added";
   }
 
-  public String commit(String message) throws FileNotFoundException {
-    PrintStream output = new PrintStream(new File("message.commit"));
-    output.println(message);
+  public String commit(String message) {
+    try {
+      PrintStream output = new PrintStream(new File("message.commit"));
+      output.println(message);
+    } catch (FileNotFoundException e) {
+
+    }
     return "commit message recorded";
   }
 

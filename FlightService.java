@@ -17,7 +17,7 @@ public class FlightService {
     System.out.println("> logout");
     System.out.println("> add");
     System.out.println("> view");
-    System.out.println("> reservations");
+    System.out.println("> commit <message>");
     System.out.println("> delete <project id>");
     System.out.println("> quit");
   }
