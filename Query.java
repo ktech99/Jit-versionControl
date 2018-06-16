@@ -288,7 +288,11 @@ public class Query {
       File file = F.next();
       if (file.isFile()) {
         System.out.println("File " + file.getName());
-      } else if (file.isDirectory() || file.getName().endsWith(".jit")) {
+      } else if (file.isDirectory()
+          || file.getName().endsWith(".jit")
+          || file.getName().endsWith(".class")
+          || file.getName().endsWith(".BufferedReader")
+          || !file.getName().contains(".")) {
         F.remove();
       }
     }
@@ -297,16 +301,27 @@ public class Query {
     try {
       while (F.hasNext()) {
         File file = F.next();
+        System.out.println(file.getName());
         // Scanner fileInput = new Scanner(new File(file.getName()));
+        FileInputStream fstream = new FileInputStream(file.getName());
         String outputFileName =
             file.getName().substring(0, file.getName().lastIndexOf(".")) + ".jit";
         PrintStream output = new PrintStream(new File(outputFileName));
-        Scanner lines = new Scanner(file);
-        while (lines.hasNextLine()) {
-          output.println(lines.next());
+        // Scanner lines = new Scanner(file);
+        // while (lines.hasNextLine()) {
+        //   // output.println(lines.next());
+        //   String str = lines.next();
+        //   System.out.println(str);
+        // }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+        String line;
+        while ((line = br.readLine()) != null) {
+          // process the line.
+          output.println(line);
         }
       }
-    } catch (FileNotFoundException e) {
+    } catch (Exception e) {
       System.out.println(e);
     }
     return "Files added";
