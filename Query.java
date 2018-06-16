@@ -297,7 +297,14 @@ public class Query {
     try {
       while (F.hasNext()) {
         File file = F.next();
-        Scanner fileInput = new Scanner(new File(file.getName()));
+        // Scanner fileInput = new Scanner(new File(file.getName()));
+        String outputFileName =
+            file.getName().substring(0, file.getName().lastIndexOf(".")) + ".jit";
+        PrintStream output = new PrintStream(new File(outputFileName));
+        Scanner lines = new Scanner(file);
+        while (lines.hasNextLine()) {
+          output.println(lines.next());
+        }
       }
     } catch (FileNotFoundException e) {
       System.out.println(e);
@@ -308,6 +315,7 @@ public class Query {
   public String commit(String message) {
     // TODO create a file with message
     // name -> message.commit
+    return "";
   }
 
   public String view() {
@@ -334,6 +342,7 @@ public class Query {
     } catch (FileNotFoundException e) {
       // TODO create file
     }
+    return "";
   }
 
   /* some utility functions below */
