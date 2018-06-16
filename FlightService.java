@@ -61,7 +61,7 @@ public class FlightService {
     } else if (tokens[0].equals("delete")) {
       if (tokens.length == 2) {
         int project_id = Integer.parseInt(tokens[1]);
-        response = q.transaction_cancel(project_id);
+        response = q.delete(project_id);
       } else {
         response = "Error: Please provide a project_id";
       }
