@@ -65,15 +65,13 @@ public class FlightService {
       } else {
         response = "Error: Please provide a project_id";
       }
-      response = q.view();
     } else if (tokens[0].equals("commit")) {
       if (tokens.length == 2) {
         String message = tokens[1];
         response = q.commit(message);
       } else {
-        response = "Error: Please provide a project_id";
+        response = "Error: Please provide a commit message";
       }
-      response = q.view();
     }
     // } else if (tokens[0].equals("reservations")) {
     //   /* list all reservations */
