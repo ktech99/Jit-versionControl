@@ -328,6 +328,14 @@ public class Query {
     return projectsString;
   }
 
+  public String push() {
+    try {
+      Scanner file = new Scanner(new File("projectDetails.det"));
+    } catch (FileNotFoundException e) {
+      // TODO create file
+    }
+  }
+
   /* some utility functions below */
 
   public void beginTransaction() throws SQLException {
