@@ -307,17 +307,9 @@ public class Query {
         String outputFileName =
             file.getName().substring(0, file.getName().lastIndexOf(".")) + ".jit";
         PrintStream output = new PrintStream(new File(outputFileName));
-        // Scanner lines = new Scanner(file);
-        // while (lines.hasNextLine()) {
-        //   // output.println(lines.next());
-        //   String str = lines.next();
-        //   System.out.println(str);
-        // }
-
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
         String line;
         while ((line = br.readLine()) != null) {
-          // process the line.
           output.println(line);
         }
       }
@@ -327,10 +319,10 @@ public class Query {
     return "Files added";
   }
 
-  public String commit(String message) {
-    // TODO create a file with message
-    // name -> message.commit
-    return "";
+  public String commit(String message) throws FileNotFoundException {
+    PrintStream output = new PrintStream(new File("message.commit"));
+    output.println(message);
+    return "commit message recorded";
   }
 
   public String view() {
