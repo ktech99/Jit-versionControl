@@ -284,22 +284,23 @@ public class Query {
   public String add() {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new ArrayList<File>();
-    listOfFiles = Arrays.asList(folder.listFiles());
+    listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
     Iterator<File> F = listOfFiles.iterator();
     while (F.hasNext()) {
-      if (F.isFile() && F.getName().endsWith(".jit")) {
-        System.out.println("File " + F.getName());
-      } else if (F.isDirectory()) {
+      File file = F.next();
+      if (file.isFile() && file.getName().endsWith(".jit")) {
+        System.out.println("File " + file.getName());
+      } else if (file.isDirectory()) {
         F.remove();
       }
     }
-    for (int i = 0; i < listOfFiles.size(); i++) {
-      if (listOfFiles.get(i).isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
-        System.out.println("File " + listOfFiles.get(i).getName());
-      } else if (listOfFiles.get(i).isDirectory()) {
-        listOfFiles.remove(i);
-      }
-    }
+    // for (int i = 0; i < listOfFiles.size(); i++) {
+    //   if (listOfFiles.get(i).isFile() && !listOfFiles.get(i).getName().endsWith(".jit")) {
+    //     System.out.println("File " + listOfFiles.get(i).getName());
+    //   } else if (listOfFiles.get(i).isDirectory()) {
+    //     listOfFiles.remove(i);
+    //   }
+    // }
     return listOfFiles.get(0).toString();
   }
 
