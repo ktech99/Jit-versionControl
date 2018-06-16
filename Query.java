@@ -283,8 +283,7 @@ public class Query {
   // Figure out seperator for each file, or have multiple files with file names
   public String add() {
     File folder = new File("").getAbsoluteFile();
-    List<File> listOfFiles = new ArrayList<File>();
-    listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+    List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
     Iterator<File> F = listOfFiles.iterator();
     while (F.hasNext()) {
       File file = F.next();
@@ -293,6 +292,16 @@ public class Query {
       } else if (file.isDirectory()) {
         F.remove();
       }
+    }
+    F = listOfFiles.iterator();
+    // taking file input
+    try {
+      while (F.hasNext()) {
+        File file = F.next();
+        Scanner fileInput = new Scanner(new File(file.getName()));
+      }
+    } catch (FileNotFoundException e) {
+
     }
     return "Files added";
   }
