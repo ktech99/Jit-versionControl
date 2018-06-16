@@ -19,7 +19,7 @@ CREATE TABLE CODE(
   ID INT,
   FileName varchar(30),
   message varchar(50),
-  code String,
+  code text,
   version int,
   PRIMARY KEY(ID, FileName)
 );
@@ -28,7 +28,7 @@ CREATE TABLE Version(
   ID INT,
   FileName varchar(30),
   message varchar(50),
-  code String,
+  code text,
   version int,
   PRIMARY KEY(ID, FileName)
 );

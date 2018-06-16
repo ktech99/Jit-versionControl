@@ -279,8 +279,7 @@ public class Query {
     }
   }
 
-  // TODO not consider directories and file names that end with .jit
-  // Figure out seperator for each file, or have multiple files with file names
+  // TODO write to files
   public String add() {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
@@ -301,9 +300,14 @@ public class Query {
         Scanner fileInput = new Scanner(new File(file.getName()));
       }
     } catch (FileNotFoundException e) {
-
+      System.out.println(e);
     }
     return "Files added";
+  }
+
+  public String commit(String message) {
+    // TODO create a file with message
+    // name -> message.commit
   }
 
   public String view() {
