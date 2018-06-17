@@ -371,11 +371,13 @@ public class Query {
       output.println(lastID);
       output.println(this.username);
       output.println(name);
+      // insert into table
       push();
     }
     projectID = file.next();
     projectCreator = file.next();
     projectName = file.next();
+    // check if correct username
     return "";
   }
 
