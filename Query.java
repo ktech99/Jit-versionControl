@@ -352,6 +352,9 @@ public class Query {
   }
 
   public String push() {
+    if (this.username == null) {
+      return "Please log in\n";
+    }
     int lastID = 0;
     int projectID = 0;
     Scanner file;
@@ -366,9 +369,13 @@ public class Query {
       lastID = last + 1;
       PrintStream output = new PrintStream(new File("projectDetails.det"));
       output.println(lastID);
+      output.println(this.username);
       output.println(name);
+      push();
     }
     projectID = file.next();
+    projectCreator = file.next();
+    projectName = file.next();
     return "";
   }
 
