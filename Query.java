@@ -41,6 +41,8 @@ public class Query {
   private PreparedStatement CheckOwnerStatement;
   private static final String GET_PROJECTS = "SELECT ID, name FROM PROJECT WHERE Creator = ?";
   private PreparedStatement GetProjectStatement;
+  private static final String GET_LAST_PROJECT = "SELECT MAX(ID) FROM PROJECT";
+  private PreparedStatement GetLastProjectStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -155,6 +157,7 @@ public class Query {
     DeleteCodestatement = conn.prepareStatement(DELETE_CODE);
     CheckOwnerStatement = conn.prepareStatement(CHECK_OWNER);
     GetProjectStatement = conn.prepareStatement(GET_PROJECTS);
+    GetLastProjectStatement = conn.prepareStatement(GET_LAST_PROJECT);
   }
 
   /**
@@ -341,6 +344,7 @@ public class Query {
       while (projects.next()) {
         projectsString += projects.getString("ID") + "\t" + projects.getString("name") + "\n";
       }
+      projects.close();
     } catch (SQLException e) {
       return "Unable to locate projects";
     }
@@ -348,10 +352,17 @@ public class Query {
   }
 
   public String push() {
+    int lastID = 0;
+    int projectID = 0;
     try {
       Scanner file = new Scanner(new File("projectDetails.det"));
+      while (file.hasNext()) {
+        projectID = file.next();
+      }
     } catch (FileNotFoundException e) {
       // TODO create file
+      ResultSet last = GetLastProjectStatement.executeQuery();
+      lastID = last + 1;
     }
     return "";
   }
