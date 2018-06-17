@@ -354,16 +354,21 @@ public class Query {
   public String push() {
     int lastID = 0;
     int projectID = 0;
+    Scanner file;
     try {
-      Scanner file = new Scanner(new File("projectDetails.det"));
-      while (file.hasNext()) {
-        projectID = file.next();
-      }
+      file = new Scanner(new File("projectDetails.det"));
     } catch (FileNotFoundException e) {
       // TODO create file
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Enter project name:");
+      String name = sc.nextLine();
       ResultSet last = GetLastProjectStatement.executeQuery();
       lastID = last + 1;
+      PrintStream output = new PrintStream(new File("projectDetails.det"));
+      output.println(lastID);
+      output.println(name);
     }
+    projectID = file.next();
     return "";
   }
 
