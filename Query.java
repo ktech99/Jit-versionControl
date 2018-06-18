@@ -47,6 +47,8 @@ public class Query {
   private PreparedStatement CreateProjectStatement;
   private static final String CREATE_CODE = "INSERT INTO CODE VALUES(?, ?, ?, ?, ?)";
   private PreparedStatement CreateCodeStatement;
+  private static final String CREATE_VERSION = "INSERT INTO VERSION VALUES(?, ?, ?, ?, ?)";
+  private PreparedStatement CreateVersionStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -164,6 +166,7 @@ public class Query {
     GetLastProjectStatement = conn.prepareStatement(GET_LAST_PROJECT);
     CreateProjectStatement = conn.prepareStatement(CREATE_PROJECT);
     CreateCodeStatement = conn.prepareStatement(CREATE_CODE);
+    CreateVersionStatement = conn.prepareStatement(CREATE_VERSION);
   }
 
   /**
