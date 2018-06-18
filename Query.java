@@ -444,19 +444,19 @@ public class Query {
       push();
     }
     // if project exists
-    projectID = file.nextInt();
-    projectVersion = file.nextInt();
+    projectID = Integer.parseInt(file.next());
+    projectVersion = Integer.parseInt(file.next());
     projectCreator = file.next();
     projectName = file.nextLine();
     System.out.println(projectName);
     // check if correct username
-    if (projectCreator != this.username) {
+    if (!projectCreator.equals(this.username)) {
       return "you can't push to this project as you aren't the owner";
     }
     try {
       PrintStream output = new PrintStream(new File("projectDetails.det"));
       output.println(projectID);
-      output.println(projectVersion + 1);
+      output.println(projectVersion);
       output.println(projectCreator);
       output.println(projectName);
       File folder = new File("").getAbsoluteFile();
@@ -487,7 +487,6 @@ public class Query {
           CreateCodeStatement.setString(2, input.getName());
           CreateCodeStatement.setString(3, code);
           CreateCodeStatement.setInt(4, projectVersion);
-          CreateCodeStatement.close();
           CreateVersionStatement.clearParameters();
           CreateVersionStatement.setInt(1, projectID);
           CreateVersionStatement.setString(2, input.getName());
