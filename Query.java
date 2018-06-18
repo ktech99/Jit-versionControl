@@ -45,6 +45,8 @@ public class Query {
   private PreparedStatement GetLastProjectStatement;
   private static final String CREATE_PROJECT = "INSERT INTO PROJECT VALUES(?, ?, ?, null)";
   private PreparedStatement CreateProjectStatement;
+  private static final String CREATE_CODE = "INSERT INTO CODE VALUES(?, ?, ?, ?, ?)";
+  private PreparedStatement CreateCodeStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -161,6 +163,7 @@ public class Query {
     GetProjectStatement = conn.prepareStatement(GET_PROJECTS);
     GetLastProjectStatement = conn.prepareStatement(GET_LAST_PROJECT);
     CreateProjectStatement = conn.prepareStatement(CREATE_PROJECT);
+    CreateCodeStatement = conn.prepareStatement(CREATE_CODE);
   }
 
   /**
@@ -397,7 +400,7 @@ public class Query {
     }
     projectID = file.nextInt();
     projectCreator = file.next();
-    projectName = file.next();
+    // projectName = file.next();
     // check if correct username
     if (projectCreator != this.username) {
       return "you can't push to this project as you aren't the owner";
