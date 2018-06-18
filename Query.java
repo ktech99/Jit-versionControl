@@ -389,6 +389,9 @@ public class Query {
     projectCreator = file.next();
     projectName = file.next();
     // check if correct username
+    if (projectCreator != this.username) {
+      return "you can't push to this project as you aren't the owner";
+    }
     return "";
   }
 
