@@ -19,6 +19,7 @@ public class FlightService {
     System.out.println("> view");
     System.out.println("> commit <message>");
     System.out.println("> delete <project id>");
+    System.out.println("> push");
     System.out.println("> quit");
   }
 
@@ -72,6 +73,8 @@ public class FlightService {
       } else {
         response = "Error: Please provide a commit message";
       }
+    } else if (tokens[0].equals("push")) {
+      response = q.push();
     }
     // } else if (tokens[0].equals("reservations")) {
     //   /* list all reservations */

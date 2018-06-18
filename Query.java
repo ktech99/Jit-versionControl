@@ -185,7 +185,7 @@ public class Query {
     }
     try {
       CheckLoginStatement.clearParameters();
-      CheckLoginStatement.setString(1, this.username);
+      CheckLoginStatement.setString(1, username);
       ResultSet passwordSet = CheckLoginStatement.executeQuery();
       passwordSet.next();
       String pass = passwordSet.getString("password");
@@ -197,7 +197,7 @@ public class Query {
         return "Logged in as " + username + "\n";
       }
     } catch (SQLException e) {
-      // e.printStackTrace();
+      e.printStackTrace();
       return "Login failed\n";
     }
   }
@@ -245,6 +245,7 @@ public class Query {
       createUserEmailStatement.setString(2, Email);
       createUserStatement.executeUpdate();
       createUserEmailStatement.executeUpdate();
+      commitTransaction();
       return "Created user " + username + "\n";
     } catch (SQLException e) {
       try {
@@ -387,9 +388,9 @@ public class Query {
       try {
         PrintStream output = new PrintStream(new File("projectDetails.det"));
         output.println(lastID);
+        output.println(1);
         output.println(this.username);
         output.println(name);
-        output.println(1);
         CreateProjectStatement.clearParameters();
         CreateProjectStatement.setInt(1, lastID);
         CreateProjectStatement.setString(2, this.username);
@@ -415,6 +416,7 @@ public class Query {
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String line;
             String code = "";
+            System.out.println("reached");
             while ((line = br.readLine()) != null) {
               code += line + "\n";
             }
@@ -423,13 +425,11 @@ public class Query {
             CreateCodeStatement.setString(2, input.getName());
             CreateCodeStatement.setString(3, code);
             CreateCodeStatement.setInt(4, 1);
-            CreateCodeStatement.close();
             CreateVersionStatement.clearParameters();
             CreateVersionStatement.setInt(1, lastID);
             CreateVersionStatement.setString(2, input.getName());
             CreateVersionStatement.setString(3, code);
             CreateVersionStatement.setInt(4, 1);
-            CreateVersionStatement.close();
           }
         } catch (Exception i) {
           System.out.println(i);
@@ -445,9 +445,10 @@ public class Query {
     }
     // if project exists
     projectID = file.nextInt();
-    projectCreator = file.next();
-    projectName = file.next();
     projectVersion = file.nextInt();
+    projectCreator = file.next();
+    projectName = file.nextLine();
+    System.out.println(projectName);
     // check if correct username
     if (projectCreator != this.username) {
       return "you can't push to this project as you aren't the owner";
@@ -455,9 +456,9 @@ public class Query {
     try {
       PrintStream output = new PrintStream(new File("projectDetails.det"));
       output.println(projectID);
+      output.println(projectVersion + 1);
       output.println(projectCreator);
       output.println(projectName);
-      output.println(projectVersion + 1);
       File folder = new File("").getAbsoluteFile();
       List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
       Iterator<File> F = listOfFiles.iterator();
@@ -492,7 +493,6 @@ public class Query {
           CreateVersionStatement.setString(2, input.getName());
           CreateVersionStatement.setString(3, code);
           CreateVersionStatement.setInt(4, projectVersion);
-          CreateVersionStatement.close();
         }
       } catch (Exception i) {
         System.out.println(i);
