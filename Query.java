@@ -369,6 +369,7 @@ public class Query {
     Scanner file = null;
     String projectName = "";
     String projectCreator = "";
+    int projectVersion = 0;
     try {
       file = new Scanner(new File("projectDetails.det"));
     } catch (FileNotFoundException e) { // If the project doesn't exist
@@ -388,6 +389,7 @@ public class Query {
         output.println(lastID);
         output.println(this.username);
         output.println(name);
+        output.println(1);
         CreateProjectStatement.clearParameters();
         CreateProjectStatement.setInt(1, lastID);
         CreateProjectStatement.setString(2, this.username);
@@ -441,13 +443,68 @@ public class Query {
       // unlock here
       push();
     }
+    // if project exists
     projectID = file.nextInt();
     projectCreator = file.next();
-    // projectName = file.next();
+    projectName = file.next();
+    projectVersion = file.nextInt();
     // check if correct username
     if (projectCreator != this.username) {
       return "you can't push to this project as you aren't the owner";
     }
+    try {
+      PrintStream output = new PrintStream(new File("projectDetails.det"));
+      output.println(projectID);
+      output.println(projectCreator);
+      output.println(projectName);
+      output.println(projectVersion + 1);
+      File folder = new File("").getAbsoluteFile();
+      List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+      Iterator<File> F = listOfFiles.iterator();
+      while (F.hasNext()) {
+        File input = F.next();
+        if (input.isDirectory() || !input.getName().endsWith(".jit")) {
+          F.remove();
+        }
+      }
+      F = listOfFiles.iterator();
+      // taking file input
+      try {
+        while (F.hasNext()) {
+          File input = F.next();
+          System.out.println(input.getName());
+          FileInputStream fstream = new FileInputStream(input.getName());
+          BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+          String line;
+          String code = "";
+          while ((line = br.readLine()) != null) {
+            code += line + "\n";
+          }
+          // delete code where id = project id
+          CreateCodeStatement.clearParameters();
+          CreateCodeStatement.setInt(1, projectID);
+          CreateCodeStatement.setString(2, input.getName());
+          CreateCodeStatement.setString(3, code);
+          CreateCodeStatement.setInt(4, projectVersion);
+          CreateCodeStatement.close();
+          CreateVersionStatement.clearParameters();
+          CreateVersionStatement.setInt(1, projectID);
+          CreateVersionStatement.setString(2, input.getName());
+          CreateVersionStatement.setString(3, code);
+          CreateVersionStatement.setInt(4, projectVersion);
+          CreateVersionStatement.close();
+        }
+      } catch (Exception i) {
+        System.out.println(i);
+      }
+    } catch (FileNotFoundException g) {
+      // file will always be found
+    }
+    // catch (SQLException h) {
+    //   System.out.println(h);
+    // }
+    // insert into table
+    // unlock here
     return "";
   }
 
