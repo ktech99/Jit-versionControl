@@ -375,6 +375,7 @@ public class Query {
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
+      // check if project name already exists
       try {
         ResultSet last = GetLastProjectStatement.executeQuery();
         last.next();

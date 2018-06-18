@@ -30,7 +30,7 @@ CREATE TABLE Version(
   message varchar(50),
   code text,
   version int,
-  PRIMARY KEY(ID, FileName)
+  PRIMARY KEY(ID, FileName, VERSION)
 );
 
 CREATE TABLE Contributers(
