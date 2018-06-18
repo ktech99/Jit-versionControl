@@ -357,24 +357,35 @@ public class Query {
     }
     int lastID = 0;
     int projectID = 0;
-    Scanner file;
+    Scanner file = null;
+    String projectName = "";
+    String projectCreator = "";
     try {
       file = new Scanner(new File("projectDetails.det"));
     } catch (FileNotFoundException e) {
-      // TODO create file
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
-      ResultSet last = GetLastProjectStatement.executeQuery();
-      lastID = last + 1;
-      PrintStream output = new PrintStream(new File("projectDetails.det"));
-      output.println(lastID);
-      output.println(this.username);
-      output.println(name);
+      try {
+        ResultSet last = GetLastProjectStatement.executeQuery();
+        last.next();
+        lastID = last.getInt("ID") + 1;
+      } catch (SQLException f) {
+
+      }
+      try {
+        PrintStream output = new PrintStream(new File("projectDetails.det"));
+        output.println(lastID);
+        output.println(this.username);
+        output.println(name);
+      } catch (FileNotFoundException g) {
+        // file will always be found
+      }
       // insert into table
+      // unlock here
       push();
     }
-    projectID = file.next();
+    projectID = file.nextInt();
     projectCreator = file.next();
     projectName = file.next();
     // check if correct username
