@@ -392,6 +392,39 @@ public class Query {
         CreateProjectStatement.setString(2, this.username);
         CreateProjectStatement.setString(3, name);
         CreateProjectStatement.executeUpdate();
+        // Creating project
+        File folder = new File("").getAbsoluteFile();
+        List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+        Iterator<File> F = listOfFiles.iterator();
+        while (F.hasNext()) {
+          File input = F.next();
+          if (input.isDirectory() || !input.getName().endsWith(".jit")) {
+            F.remove();
+          }
+        }
+        F = listOfFiles.iterator();
+        // taking file input
+        try {
+          while (F.hasNext()) {
+            File input = F.next();
+            System.out.println(input.getName());
+            FileInputStream fstream = new FileInputStream(input.getName());
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            String line;
+            String code = "";
+            while ((line = br.readLine()) != null) {
+              code += line + "\n";
+            }
+            CreateCodeStatement.clearParameters();
+            CreateCodeStatement.setInt(1, lastID);
+            CreateCodeStatement.setString(2, input.getName());
+            CreateCodeStatement.setString(3, code);
+            CreateCodeStatement.setInt(4, 1);
+            CreateCodeStatement.close();
+          }
+        } catch (Exception i) {
+          System.out.println(i);
+        }
       } catch (FileNotFoundException g) {
         // file will always be found
       } catch (SQLException h) {

@@ -16,7 +16,7 @@ CREATE TABLE PROJECT(
 );
 
 CREATE TABLE CODE(
-  ID INT,
+  ID INT, --ProjectID
   FileName varchar(30),
   message varchar(50),
   code text,
