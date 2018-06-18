@@ -381,8 +381,15 @@ public class Query {
         output.println(lastID);
         output.println(this.username);
         output.println(name);
+        CreateProjectStatement.clearParameters();
+        CreateProjectStatement.setInt(1, lastID);
+        CreateProjectStatement.setString(2, this.username);
+        CreateProjectStatement.setString(3, name);
+        CreateProjectStatement.executeUpdate();
       } catch (FileNotFoundException g) {
         // file will always be found
+      } catch (SQLException h) {
+        System.out.println(h);
       }
       // insert into table
       // unlock here
