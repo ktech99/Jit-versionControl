@@ -43,6 +43,8 @@ public class Query {
   private PreparedStatement GetProjectStatement;
   private static final String GET_LAST_PROJECT = "SELECT MAX(ID) FROM PROJECT";
   private PreparedStatement GetLastProjectStatement;
+  private static final String CREATE_PROJECT = "INSERT INTO PROJECT VALUES(?, ?, ?, null)";
+  private PreparedStatement CreateProjectStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -158,6 +160,7 @@ public class Query {
     CheckOwnerStatement = conn.prepareStatement(CHECK_OWNER);
     GetProjectStatement = conn.prepareStatement(GET_PROJECTS);
     GetLastProjectStatement = conn.prepareStatement(GET_LAST_PROJECT);
+    CreateProjectStatement = conn.prepareStatement(CREATE_PROJECT);
   }
 
   /**
@@ -362,7 +365,7 @@ public class Query {
     String projectCreator = "";
     try {
       file = new Scanner(new File("projectDetails.det"));
-    } catch (FileNotFoundException e) {
+    } catch (FileNotFoundException e) { // If the project doesn't exist
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
