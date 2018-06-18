@@ -421,6 +421,12 @@ public class Query {
             CreateCodeStatement.setString(3, code);
             CreateCodeStatement.setInt(4, 1);
             CreateCodeStatement.close();
+            CreateVersionStatement.clearParameters();
+            CreateVersionStatement.setInt(1, lastID);
+            CreateVersionStatement.setString(2, input.getName());
+            CreateVersionStatement.setString(3, code);
+            CreateVersionStatement.setInt(4, 1);
+            CreateVersionStatement.close();
           }
         } catch (Exception i) {
           System.out.println(i);
