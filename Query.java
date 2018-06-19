@@ -416,7 +416,7 @@ public class Query {
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String line;
             String code = "";
-            System.out.println("reached");
+            FileInputStream messageStream = new FileInputStream("message.commit");
             while ((line = br.readLine()) != null) {
               code += line + "\n";
             }
@@ -487,13 +487,14 @@ public class Query {
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
           CreateCodeStatement.setString(2, input.getName());
-          CreateCodeStatement.setString(3, code);
-          CreateCodeStatement.setInt(4, projectVersion);
+          // message
+          CreateCodeStatement.setString(4, code);
+          CreateCodeStatement.setInt(5, projectVersion);
           CreateVersionStatement.clearParameters();
           CreateVersionStatement.setInt(1, projectID);
           CreateVersionStatement.setString(2, input.getName());
-          CreateVersionStatement.setString(3, code);
-          CreateVersionStatement.setInt(4, projectVersion);
+          CreateVersionStatement.setString(4, code);
+          CreateVersionStatement.setInt(5, projectVersion);
           CreateCodeStatement.executeUpdate();
           CreateVersionStatement.executeUpdate();
         }
