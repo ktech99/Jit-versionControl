@@ -309,6 +309,7 @@ public class Query {
         F.remove();
       }
     }
+    // TODO remove .class and .bufferedIO
     F = listOfFiles.iterator();
     // taking file input
     try {
@@ -498,7 +499,7 @@ public class Query {
           while ((m = messageReader.readLine()) != null) {
             message += m + "\n";
           }
-          // delete code where id = project id
+          // TODO delete code where id = project id
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
           CreateCodeStatement.setString(2, input.getName());
