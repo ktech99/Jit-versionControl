@@ -489,7 +489,7 @@ public class Query {
           String line;
           String code = "";
           String m;
-          String message;
+          String message = "";
           FileInputStream messageStream = new FileInputStream("message.commit");
           BufferedReader messageReader = new BufferedReader(new InputStreamReader(messageStream));
           while ((line = br.readLine()) != null) {
