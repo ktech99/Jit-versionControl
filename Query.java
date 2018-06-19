@@ -416,20 +416,27 @@ public class Query {
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String line;
             String code = "";
+            String m = "";
             FileInputStream messageStream = new FileInputStream("message.commit");
+            BufferedReader messageReader = new BufferedReader(new InputStreamReader(messageStream));
             while ((line = br.readLine()) != null) {
               code += line + "\n";
+            }
+            while ((m = messageReader.readLine()) != null) {
+              message += m + "\n";
             }
             CreateCodeStatement.clearParameters();
             CreateCodeStatement.setInt(1, lastID);
             CreateCodeStatement.setString(2, input.getName());
-            CreateCodeStatement.setString(3, code);
-            CreateCodeStatement.setInt(4, 1);
+            CreateCodeStatement.setString(3, message);
+            CreateCodeStatement.setString(4, code);
+            CreateCodeStatement.setInt(5, 1);
             CreateVersionStatement.clearParameters();
             CreateVersionStatement.setInt(1, lastID);
             CreateVersionStatement.setString(2, input.getName());
-            CreateVersionStatement.setString(3, code);
-            CreateVersionStatement.setInt(4, 1);
+            CreateVersionStatement.setString(3, message);
+            CreateVersionStatement.setString(4, code);
+            CreateVersionStatement.setInt(5, 1);
             CreateCodeStatement.executeUpdate();
             CreateVersionStatement.executeUpdate();
           }
@@ -480,19 +487,25 @@ public class Query {
           BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
           String line;
           String code = "";
+          String m = "";
+          BufferedReader messageReader = new BufferedReader(new InputStreamReader(messageStream));
           while ((line = br.readLine()) != null) {
             code += line + "\n";
+          }
+          while ((m = messageReader.readLine()) != null) {
+            message += m + "\n";
           }
           // delete code where id = project id
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
           CreateCodeStatement.setString(2, input.getName());
-          // message
+          CreateCodeStatement.setString(3, message);
           CreateCodeStatement.setString(4, code);
           CreateCodeStatement.setInt(5, projectVersion);
           CreateVersionStatement.clearParameters();
           CreateVersionStatement.setInt(1, projectID);
           CreateVersionStatement.setString(2, input.getName());
+          CreateVersionStatement.setString(3, message);
           CreateVersionStatement.setString(4, code);
           CreateVersionStatement.setInt(5, projectVersion);
           CreateCodeStatement.executeUpdate();
