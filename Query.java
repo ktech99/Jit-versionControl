@@ -430,6 +430,8 @@ public class Query {
             CreateVersionStatement.setString(2, input.getName());
             CreateVersionStatement.setString(3, code);
             CreateVersionStatement.setInt(4, 1);
+            CreateCodeStatement.executeUpdate();
+            CreateVersionStatement.executeUpdate();
           }
         } catch (Exception i) {
           System.out.println(i);
