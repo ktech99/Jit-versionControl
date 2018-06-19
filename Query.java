@@ -416,7 +416,8 @@ public class Query {
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String line;
             String code = "";
-            String m = "";
+            String m;
+            String message = "";
             FileInputStream messageStream = new FileInputStream("message.commit");
             BufferedReader messageReader = new BufferedReader(new InputStreamReader(messageStream));
             while ((line = br.readLine()) != null) {
@@ -487,7 +488,9 @@ public class Query {
           BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
           String line;
           String code = "";
-          String m = "";
+          String m;
+          String message;
+          FileInputStream messageStream = new FileInputStream("message.commit");
           BufferedReader messageReader = new BufferedReader(new InputStreamReader(messageStream));
           while ((line = br.readLine()) != null) {
             code += line + "\n";
