@@ -21,3 +21,21 @@ This project uses highly modified version of code that is part of an assignment 
 - Follow naming convention of the variables and prepare statements
 
 - Make variable names as descriptive as possible
+
+## Building/Running
+
+Create a server on Microsoft Azure and fill in missing fields in dbconn.properties file
+
+compiling the code:
+
+```
+javac -cp "lib/*" *.java
+```
+
+running the code:
+
+```
+java -cp "lib/*:." FlightService
+```
+
+

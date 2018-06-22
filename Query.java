@@ -522,6 +522,7 @@ public class Query {
           CreateVersionStatement.setInt(5, projectVersion);
           CreateCodeStatement.executeUpdate();
           CreateVersionStatement.executeUpdate();
+          // file.delete
         }
       } catch (Exception i) {
         System.out.println(i);
