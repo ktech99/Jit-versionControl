@@ -321,7 +321,7 @@ public class Query {
             && !(file.getName().endsWith(".class") || file.getName().endsWith(".BufferedReader"))
             && file.getName().contains(".")) {
           FileInputStream fstream = new FileInputStream(file.getName());
-          String outputFileName = file.getName().substring(0, file.getName()) + ".jit";
+          String outputFileName = file.getName() + ".jit";
           PrintStream output = new PrintStream(new File(outputFileName));
           BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
           String line;
