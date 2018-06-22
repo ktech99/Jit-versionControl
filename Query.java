@@ -338,7 +338,7 @@ public class Query {
     } catch (Exception e) {
       System.out.println(e);
     }
-    return "Files added+\n";
+    return "Files added\n";
   }
 
   public String commit(String message) {
@@ -449,6 +449,16 @@ public class Query {
             CreateVersionStatement.setInt(5, 1);
             CreateCodeStatement.executeUpdate();
             CreateVersionStatement.executeUpdate();
+            File folder = new File("").getAbsoluteFile();
+            List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+            Iterator<File> Files = listOfFiles.iterator();
+            while (Files.hasNext()) {
+              File Allfiles = Files.next();
+              if (Allfiles.getName().endsWith(".jit")
+                  || Allfiles.getName().equals("message.commit")) {
+                Allfiles.delete();
+              }
+            }
           }
         } catch (Exception i) {
           System.out.println(i);
