@@ -318,8 +318,7 @@ public class Query {
         System.out.println(file.getName());
         // Scanner fileInput = new Scanner(new File(file.getName()));
         FileInputStream fstream = new FileInputStream(file.getName());
-        String outputFileName =
-            file.getName().substring(0, file.getName().lastIndexOf(".")) + ".jit";
+        String outputFileName = file.getName().substring(0, file.getName()) + ".jit";
         PrintStream output = new PrintStream(new File(outputFileName));
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
         String line;
