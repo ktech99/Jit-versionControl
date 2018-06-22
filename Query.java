@@ -41,7 +41,7 @@ public class Query {
   private PreparedStatement CheckOwnerStatement;
   private static final String GET_PROJECTS = "SELECT ID, name FROM PROJECT WHERE Creator = ?";
   private PreparedStatement GetProjectStatement;
-  private static final String GET_LAST_PROJECT = "SELECT MAX(ID) FROM PROJECT";
+  private static final String GET_LAST_PROJECT = "SELECT MAX(ID) as ID FROM PROJECT";
   private PreparedStatement GetLastProjectStatement;
   private static final String CREATE_PROJECT = "INSERT INTO PROJECT VALUES(?, ?, ?, null)";
   private PreparedStatement CreateProjectStatement;
@@ -381,13 +381,13 @@ public class Query {
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
-      // check if project name already exists
+      // TODO check if project name already exists
       try {
         ResultSet last = GetLastProjectStatement.executeQuery();
         last.next();
         lastID = last.getInt("ID") + 1;
       } catch (SQLException f) {
-
+        System.out.println(f);
       }
       try {
         PrintStream output = new PrintStream(new File("projectDetails.det"));
@@ -459,7 +459,7 @@ public class Query {
     }
     // if project exists
     projectID = Integer.parseInt(file.next());
-    projectVersion = Integer.parseInt(file.next());
+    projectVersion = Integer.parseInt(file.next()) + 1;
     projectCreator = file.next();
     projectName = file.nextLine();
     System.out.println(projectName);
