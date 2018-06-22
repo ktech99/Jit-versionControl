@@ -386,15 +386,15 @@ public class Query {
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
-      GetProjectNamesStatement.clearParameters();
-      GetProjectNamesStatement.setString(1, username);
-      ResultSet projectNames = GetProjectNamesStatement.executeQuery();
-      while (projectNames.next()) {
-        if (projectNames.getString("name").equals(name)) {
-          return "Can't have 2 projects with same name";
-        }
-      }
       try {
+        GetProjectNamesStatement.clearParameters();
+        GetProjectNamesStatement.setString(1, username);
+        ResultSet projectNames = GetProjectNamesStatement.executeQuery();
+        while (projectNames.next()) {
+          if (projectNames.getString("name").equals(name)) {
+            return "Can't have 2 projects with same name";
+          }
+        }
         ResultSet last = GetLastProjectStatement.executeQuery();
         last.next();
         lastID = last.getInt("ID") + 1;
