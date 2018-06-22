@@ -318,7 +318,9 @@ public class Query {
         File file = F.next();
         System.out.println(file.getName());
         if (file.isFile()
-            && !(file.getName().endsWith(".class") || file.getName().endsWith(".BufferedReader"))
+            && !(file.getName().endsWith(".class")
+                || file.getName().endsWith(".BufferedReader")
+                || file.getName().endsWith(".jit"))
             && file.getName().contains(".")) {
           FileInputStream fstream = new FileInputStream(file.getName());
           String outputFileName = file.getName() + ".jit";
@@ -458,16 +460,17 @@ public class Query {
       push();
     }
     // if project exists
-    projectID = Integer.parseInt(file.next());
-    projectVersion = Integer.parseInt(file.next()) + 1;
-    projectCreator = file.next();
-    projectName = file.nextLine();
-    System.out.println(projectName);
     // check if correct username
-    if (!projectCreator.equals(this.username)) {
-      return "you can't push to this project as you aren't the owner";
-    }
     try {
+      file = new Scanner(new File("projectDetails.det"));
+      projectID = Integer.parseInt(file.next());
+      projectVersion = Integer.parseInt(file.next()) + 1;
+      projectCreator = file.next();
+      projectName = file.nextLine();
+      System.out.println(projectName);
+      if (!projectCreator.equals(this.username)) {
+        return "you can't push to this project as you aren't the owner";
+      }
       PrintStream output = new PrintStream(new File("projectDetails.det"));
       output.println(projectID);
       output.println(projectVersion);
@@ -502,7 +505,6 @@ public class Query {
           while ((m = messageReader.readLine()) != null) {
             message += m + "\n";
           }
-          // TODO delete code where id = project id
           DeleteFromCodeStatement.clearParameters();
           DeleteFromCodeStatement.setInt(1, projectID);
           DeleteFromCodeStatement.executeUpdate();
