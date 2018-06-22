@@ -308,14 +308,12 @@ public class Query {
     //     F.remove();
     //   }
     // }
-    // TODO remove .class and .bufferedIO
     // F = listOfFiles.iterator();
     // taking file input
     try {
       while (F.hasNext()) {
         File file = F.next();
         System.out.println(file.getName());
-        // Scanner fileInput = new Scanner(new File(file.getName()));
         if (file.isFile()
             && !(file.getName().endsWith(".class") || file.getName().endsWith(".BufferedReader"))
             && file.getName().contains(".")) {
@@ -501,7 +499,9 @@ public class Query {
           while ((m = messageReader.readLine()) != null) {
             message += m + "\n";
           }
-          // TODO delete code where id = project id
+          DeleteCodestatement.clearParameters();
+          DeleteCodestatement.setInt(1, projectID);
+          DeleteCodestatement.executeUpdate();
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
           CreateCodeStatement.setString(2, input.getName());
