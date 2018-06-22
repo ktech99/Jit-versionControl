@@ -259,6 +259,7 @@ public class Query {
   }
 
   public String delete(int projectID) {
+    // TODO fix deleting project
     if (this.username == null) {
       return "Please log in\n";
     }
@@ -275,10 +276,7 @@ public class Query {
       }
       CheckOwnerStatement.clearParameters();
       CheckOwnerStatement.setInt(1, projectID);
-      DeleteCodestatement.clearParameters();
-      DeleteCodestatement.setInt(1, projectID);
       ResultSet owner = CheckOwnerStatement.executeQuery();
-      DeleteCodestatement.executeUpdate();
       owner.next();
       if (!this.username.equals(owner.getString("creator"))) {
         return "Cannot Delete this project. Not the owner!\n";
@@ -287,6 +285,7 @@ public class Query {
       DeleteProjectStatement.setInt(1, projectID);
       DeleteProjectStatement.executeUpdate();
       return "Deleted project " + projectID + "\n";
+      // TODO delete project file
     } catch (SQLException e) {
       return "Failed to delete project\n";
     }
