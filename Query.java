@@ -49,6 +49,8 @@ public class Query {
   private PreparedStatement CreateCodeStatement;
   private static final String CREATE_VERSION = "INSERT INTO VERSION VALUES(?, ?, ?, ?, ?)";
   private PreparedStatement CreateVersionStatement;
+  private static final String DELETE_FROM_CODE = "Delete From Code " + " Where ID = ?";
+  private PreparedStatement DeleteFromCodeStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -167,6 +169,7 @@ public class Query {
     CreateProjectStatement = conn.prepareStatement(CREATE_PROJECT);
     CreateCodeStatement = conn.prepareStatement(CREATE_CODE);
     CreateVersionStatement = conn.prepareStatement(CREATE_VERSION);
+    DeleteFromCodeStatement = conn.prepareStatement(DELETE_FROM_CODE);
   }
 
   /**
@@ -330,7 +333,7 @@ public class Query {
     } catch (Exception e) {
       System.out.println(e);
     }
-    return "Files added";
+    return "Files added+\n";
   }
 
   public String commit(String message) {
@@ -499,9 +502,10 @@ public class Query {
           while ((m = messageReader.readLine()) != null) {
             message += m + "\n";
           }
-          DeleteCodestatement.clearParameters();
-          DeleteCodestatement.setInt(1, projectID);
-          DeleteCodestatement.executeUpdate();
+          // TODO delete code where id = project id
+          DeleteFromCodeStatement.clearParameters();
+          DeleteFromCodeStatement.setInt(1, projectID);
+          DeleteFromCodeStatement.executeUpdate();
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
           CreateCodeStatement.setString(2, input.getName());
