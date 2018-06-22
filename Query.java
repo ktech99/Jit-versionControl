@@ -51,6 +51,8 @@ public class Query {
   private PreparedStatement CreateVersionStatement;
   private static final String DELETE_FROM_CODE = "Delete From Code " + " Where ID = ?";
   private PreparedStatement DeleteFromCodeStatement;
+  private static final String GET_PROJECT_NAMES = "Select name From PROJECT WHERE creators = ?";
+  private PreparedStatement GetProjectNamesStatement;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -170,6 +172,7 @@ public class Query {
     CreateCodeStatement = conn.prepareStatement(CREATE_CODE);
     CreateVersionStatement = conn.prepareStatement(CREATE_VERSION);
     DeleteFromCodeStatement = conn.prepareStatement(DELETE_FROM_CODE);
+    GetProjectNamesStatement = conn.prepareStatement(GET_PROJECT_NAMES);
   }
 
   /**
@@ -383,7 +386,14 @@ public class Query {
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter project name:");
       String name = sc.nextLine();
-      // TODO check if project name already exists
+      GetProjectNamesStatement.clearParameters();
+      GetProjectNamesStatement.setString(1, username);
+      ResultSet projectNames = GetProjectNamesStatement.executeQuery();
+      while (projectNames.next()) {
+        if (projectNames.getString("name").equals(name)) {
+          return "Can't have 2 projects with same name";
+        }
+      }
       try {
         ResultSet last = GetLastProjectStatement.executeQuery();
         last.next();
