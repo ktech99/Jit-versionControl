@@ -262,7 +262,6 @@ public class Query {
   }
 
   public String delete(int projectID) {
-    // TODO fix deleting project
     if (this.username == null) {
       return "Please log in\n";
     }
@@ -291,13 +290,11 @@ public class Query {
       File file = new File("projectDetails.det");
       file.delete();
       return "Deleted project " + projectID + "\n";
-      // TODO delete project file
     } catch (Exception e) {
       return "Failed to delete project\n";
     }
   }
 
-  // TODO write to files
   public String add() {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
@@ -449,8 +446,8 @@ public class Query {
             CreateVersionStatement.setInt(5, 1);
             CreateCodeStatement.executeUpdate();
             CreateVersionStatement.executeUpdate();
-            File folder = new File("").getAbsoluteFile();
-            List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+            folder = new File("").getAbsoluteFile();
+            listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
             Iterator<File> Files = listOfFiles.iterator();
             while (Files.hasNext()) {
               File Allfiles = Files.next();
