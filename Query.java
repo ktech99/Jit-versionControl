@@ -297,33 +297,37 @@ public class Query {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
     Iterator<File> F = listOfFiles.iterator();
-    while (F.hasNext()) {
-      File file = F.next();
-      if (file.isFile()) {
-        System.out.println("File " + file.getName());
-      } else if (file.isDirectory()
-          || file.getName().endsWith(".jit")
-          || file.getName().endsWith(".class")
-          || file.getName().endsWith(".BufferedReader")
-          || !file.getName().contains(".")) {
-        F.remove();
-      }
-    }
+    // while (F.hasNext()) {
+    //   File file = F.next();
+    //   if (file.isFile()) {
+    //     System.out.println("File " + file.getName());
+    //   } else if (file.isDirectory()
+    //       || file.getName().endsWith(".jit")
+    //       || file.getName().endsWith(".class")
+    //       || file.getName().endsWith(".BufferedReader")
+    //       || !file.getName().contains(".")) {
+    //     F.remove();
+    //   }
+    // }
     // TODO remove .class and .bufferedIO
-    F = listOfFiles.iterator();
+    // F = listOfFiles.iterator();
     // taking file input
     try {
       while (F.hasNext()) {
         File file = F.next();
         System.out.println(file.getName());
         // Scanner fileInput = new Scanner(new File(file.getName()));
-        FileInputStream fstream = new FileInputStream(file.getName());
-        String outputFileName = file.getName().substring(0, file.getName()) + ".jit";
-        PrintStream output = new PrintStream(new File(outputFileName));
-        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-        String line;
-        while ((line = br.readLine()) != null) {
-          output.println(line);
+        if (file.isFile()
+            && !(file.getName().endsWith(".class") || file.getName().endsWith(".BufferedReader"))
+            && file.getName().contains(".")) {
+          FileInputStream fstream = new FileInputStream(file.getName());
+          String outputFileName = file.getName().substring(0, file.getName()) + ".jit";
+          PrintStream output = new PrintStream(new File(outputFileName));
+          BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+          String line;
+          while ((line = br.readLine()) != null) {
+            output.println(line);
+          }
         }
       }
     } catch (Exception e) {
