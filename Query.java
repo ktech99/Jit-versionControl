@@ -287,9 +287,12 @@ public class Query {
       DeleteProjectStatement.clearParameters();
       DeleteProjectStatement.setInt(1, projectID);
       DeleteProjectStatement.executeUpdate();
+
+      File file = new File("projectDetails.det");
+      file.delete();
       return "Deleted project " + projectID + "\n";
       // TODO delete project file
-    } catch (SQLException e) {
+    } catch (Exception e) {
       return "Failed to delete project\n";
     }
   }
