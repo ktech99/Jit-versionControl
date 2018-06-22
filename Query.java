@@ -343,7 +343,7 @@ public class Query {
     } catch (FileNotFoundException e) {
 
     }
-    return "commit message recorded";
+    return "commit message recorded+\n";
   }
 
   public String view() {
