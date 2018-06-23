@@ -444,13 +444,15 @@ public class Query {
             }
             CreateCodeStatement.clearParameters();
             CreateCodeStatement.setInt(1, lastID);
-            CreateCodeStatement.setString(2, input.getName());
+            CreateVersionStatement.setString(
+                2, input.getName().substring(0, input.getName().lastIndexOf(".")));
             CreateCodeStatement.setString(3, message);
             CreateCodeStatement.setString(4, code);
             CreateCodeStatement.setInt(5, 1);
             CreateVersionStatement.clearParameters();
             CreateVersionStatement.setInt(1, lastID);
-            CreateVersionStatement.setString(2, input.getName());
+            CreateVersionStatement.setString(
+                2, input.getName().substring(0, input.getName().lastIndexOf(".")));
             CreateVersionStatement.setString(3, message);
             CreateVersionStatement.setString(4, code);
             CreateVersionStatement.setInt(5, 1);
