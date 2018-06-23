@@ -444,7 +444,7 @@ public class Query {
             }
             CreateCodeStatement.clearParameters();
             CreateCodeStatement.setInt(1, lastID);
-            CreateCodStatement.setString(
+            CreateCodeStatement.setString(
                 2, input.getName().substring(0, input.getName().lastIndexOf(".")));
             CreateCodeStatement.setString(3, message);
             CreateCodeStatement.setString(4, code);
@@ -532,7 +532,7 @@ public class Query {
           DeleteFromCodeStatement.executeUpdate();
           CreateCodeStatement.clearParameters();
           CreateCodeStatement.setInt(1, projectID);
-          CreateCodStatement.setString(
+          CreateCodeStatement.setString(
               2, input.getName().substring(0, input.getName().lastIndexOf(".")));
           CreateCodeStatement.setString(3, message);
           CreateCodeStatement.setString(4, code);
