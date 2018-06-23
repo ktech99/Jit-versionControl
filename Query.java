@@ -556,6 +556,15 @@ public class Query {
           CreateVersionStatement.executeUpdate();
           // file.delete
         }
+        folder = new File("").getAbsoluteFile();
+        listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+        Iterator<File> Files = listOfFiles.iterator();
+        while (Files.hasNext()) {
+          File Allfiles = Files.next();
+          if (Allfiles.getName().endsWith(".jit") || Allfiles.getName().equals("message.commit")) {
+            Allfiles.delete();
+          }
+        }
         if (fileCount == 0) {
           return "Please add and commit before pushing\n";
         }
