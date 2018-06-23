@@ -51,7 +51,7 @@ public class Query {
   private PreparedStatement CreateVersionStatement;
   private static final String DELETE_FROM_CODE = "Delete From Code " + " Where ID = ?";
   private PreparedStatement DeleteFromCodeStatement;
-  private static final String GET_PROJECT_NAMES = "Select name From PROJECT WHERE creators = ?";
+  private static final String GET_PROJECT_NAMES = "Select name From PROJECT WHERE creator = ?";
   private PreparedStatement GetProjectNamesStatement;
 
   // transactions
