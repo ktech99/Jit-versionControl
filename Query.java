@@ -425,7 +425,9 @@ public class Query {
         F = listOfFiles.iterator();
         // taking file input
         try {
+          int fileCount = 0;
           while (F.hasNext()) {
+            fileCount = 1;
             File input = F.next();
             System.out.println(input.getName());
             FileInputStream fstream = new FileInputStream(input.getName());
@@ -469,10 +471,14 @@ public class Query {
               }
             }
           }
+          if (fileCount == 0) {
+            return "Please add and commit before pushing\n";
+          }
         } catch (Exception i) {
-          System.out.println(i);
+          return "Please add and commit before pushing\n";
         }
       } catch (FileNotFoundException g) {
+        return "Please add and commit before pushing\n";
         // file will always be found
       } catch (SQLException h) {
         System.out.println(h);
@@ -510,7 +516,9 @@ public class Query {
       F = listOfFiles.iterator();
       // taking file input
       try {
+        int fileCount = 0;
         while (F.hasNext()) {
+          fileCount = 1;
           File input = F.next();
           System.out.println(input.getName());
           FileInputStream fstream = new FileInputStream(input.getName());
@@ -548,10 +556,14 @@ public class Query {
           CreateVersionStatement.executeUpdate();
           // file.delete
         }
+        if (fileCount == 0) {
+          return "Please add and commit before pushing\n";
+        }
       } catch (Exception i) {
-        System.out.println(i);
+        return "Please add and commit before pushing\n";
       }
     } catch (FileNotFoundException g) {
+      return "Please add and commit before pushing\n";
       // file will always be found
     }
     // catch (SQLException h) {
