@@ -460,15 +460,15 @@ public class Query {
             CreateVersionStatement.setInt(5, 1);
             CreateCodeStatement.executeUpdate();
             CreateVersionStatement.executeUpdate();
-            folder = new File("").getAbsoluteFile();
-            listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
-            Iterator<File> Files = listOfFiles.iterator();
-            while (Files.hasNext()) {
-              File Allfiles = Files.next();
-              if (Allfiles.getName().endsWith(".jit")
-                  || Allfiles.getName().equals("message.commit")) {
-                Allfiles.delete();
-              }
+          }
+          folder = new File("").getAbsoluteFile();
+          listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
+          Iterator<File> Files = listOfFiles.iterator();
+          while (Files.hasNext()) {
+            File Allfiles = Files.next();
+            if (Allfiles.getName().endsWith(".jit")
+                || Allfiles.getName().equals("message.commit")) {
+              Allfiles.delete();
             }
           }
           if (fileCount == 0) {
