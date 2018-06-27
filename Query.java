@@ -567,6 +567,7 @@ public class Query {
     return "Project version " + projectVersion + " has been pushed\n";
   }
 
+  // TODO: finish
   public String versions(int projectID) {
     if (this.username == null) {
       return "Please log in\n";
@@ -579,6 +580,10 @@ public class Query {
       if (!this.username.equals(owner.getString("creator"))) {
         return "Cannot view version as you are not the owner\n";
       }
+      GetProjectVersions.clearParameters();
+      GetProjectVersions.setInt(1, ProjectID);
+      ResultSet versions = GetProjectVersions.executeQuery();
+      // print out project versions
     } catch (SQLException e) {
       System.out.println(e);
     }
