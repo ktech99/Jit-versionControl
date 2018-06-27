@@ -567,17 +567,22 @@ public class Query {
     return "Project version " + projectVersion + " has been pushed\n";
   }
 
-  public String versions(String projectID) {
+  public String versions(int projectID) {
     if (this.username == null) {
       return "Please log in\n";
     }
-    CheckOwnerStatement.clearParameters();
-    CheckOwnerStatement.setInt(1, projectID);
-    ResultSet owner = CheckOwnerStatement.executeQuery();
-    owner.next();
-    if (!this.username.equals(owner.getString("creator"))) {
-      return "Cannot view version as you are not the owner\n";
+    try {
+      CheckOwnerStatement.clearParameters();
+      CheckOwnerStatement.setInt(1, projectID);
+      ResultSet owner = CheckOwnerStatement.executeQuery();
+      owner.next();
+      if (!this.username.equals(owner.getString("creator"))) {
+        return "Cannot view version as you are not the owner\n";
+      }
+    } catch (SQLException e) {
+      System.out.println(e);
     }
+    return "";
   }
 
   /* some utility functions below */
