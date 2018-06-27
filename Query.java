@@ -53,6 +53,9 @@ public class Query {
   private PreparedStatement DeleteFromCodeStatement;
   private static final String GET_PROJECT_NAMES = "Select name From PROJECT WHERE creator = ?";
   private PreparedStatement GetProjectNamesStatement;
+  private static final String GET_PROJECT_VERSIONS =
+      "Select version, message From Version where ID = ?";
+  private PreparedStatement GetProjectVersions;
 
   // transactions
   private static final String BEGIN_TRANSACTION_SQL =
@@ -173,6 +176,7 @@ public class Query {
     CreateVersionStatement = conn.prepareStatement(CREATE_VERSION);
     DeleteFromCodeStatement = conn.prepareStatement(DELETE_FROM_CODE);
     GetProjectNamesStatement = conn.prepareStatement(GET_PROJECT_NAMES);
+    GetProjectVersions = conn.prepareStatement(GET_PROJECT_VERSIONS);
   }
 
   /**
@@ -562,6 +566,8 @@ public class Query {
     }
     return "Project version " + projectVersion + " has been pushed\n";
   }
+
+  public String versions() {}
 
   /* some utility functions below */
 
