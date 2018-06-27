@@ -567,7 +567,18 @@ public class Query {
     return "Project version " + projectVersion + " has been pushed\n";
   }
 
-  public String versions() {}
+  public String versions(String projectID) {
+    if (this.username == null) {
+      return "Please log in\n";
+    }
+    CheckOwnerStatement.clearParameters();
+    CheckOwnerStatement.setInt(1, projectID);
+    ResultSet owner = CheckOwnerStatement.executeQuery();
+    owner.next();
+    if (!this.username.equals(owner.getString("creator"))) {
+      return "Cannot view version as you are not the owner\n";
+    }
+  }
 
   /* some utility functions below */
 
