@@ -581,7 +581,7 @@ public class Query {
         return "Cannot view version as you are not the owner\n";
       }
       GetProjectVersions.clearParameters();
-      GetProjectVersions.setInt(1, ProjectID);
+      GetProjectVersions.setInt(1, projectID);
       ResultSet versions = GetProjectVersions.executeQuery();
       // print out project versions
     } catch (SQLException e) {
