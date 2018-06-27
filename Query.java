@@ -302,20 +302,6 @@ public class Query {
     File folder = new File("").getAbsoluteFile();
     List<File> listOfFiles = new LinkedList<File>(Arrays.asList(folder.listFiles()));
     Iterator<File> F = listOfFiles.iterator();
-    // while (F.hasNext()) {
-    //   File file = F.next();
-    //   if (file.isFile()) {
-    //     System.out.println("File " + file.getName());
-    //   } else if (file.isDirectory()
-    //       || file.getName().endsWith(".jit")
-    //       || file.getName().endsWith(".class")
-    //       || file.getName().endsWith(".BufferedReader")
-    //       || !file.getName().contains(".")) {
-    //     F.remove();
-    //   }
-    // }
-    // F = listOfFiles.iterator();
-    // taking file input
     try {
       while (F.hasNext()) {
         File file = F.next();
@@ -488,7 +474,6 @@ public class Query {
       push();
     }
     // if project exists
-    // check if correct username
     try {
       file = new Scanner(new File("projectDetails.det"));
       projectID = Integer.parseInt(file.next());
@@ -575,12 +560,7 @@ public class Query {
       return "Please add and commit before pushing\n";
       // file will always be found
     }
-    // catch (SQLException h) {
-    //   System.out.println(h);
-    // }
-    // insert into table
-    // unlock here
-    return "";
+    return "Project version " + projectVersion + " has been pushed\n";
   }
 
   /* some utility functions below */
