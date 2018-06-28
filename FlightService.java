@@ -18,6 +18,7 @@ public class FlightService {
     System.out.println("> add");
     System.out.println("> view");
     System.out.println("> commit <message>");
+    System.out.println("> versions <project id>");
     System.out.println("> delete <project id>");
     System.out.println("> push");
     System.out.println("> quit");
@@ -75,6 +76,13 @@ public class FlightService {
       }
     } else if (tokens[0].equals("push")) {
       response = q.push();
+    } else if (tokens[0].equals("versions")) {
+      if (tokens.length == 2) {
+        String id = tokens[1];
+        response = q.versions(Integer.parseInt(id));
+      } else {
+        response = "Error: Please provide a version number";
+      }
     }
     // } else if (tokens[0].equals("reservations")) {
     //   /* list all reservations */
