@@ -212,6 +212,12 @@ public class Query {
     }
   }
 
+  /**
+   * Implement logOut user function.
+   *
+   * @return "No one logged in\n" if no user is logged in or "Log out successful\n" if user was
+   *     logged out successfully.
+   */
   public String logOut() {
     if (this.username == null) {
       return "No one logged in\n";
