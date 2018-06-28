@@ -580,6 +580,10 @@ public class Query {
       if (!this.username.equals(owner.getString("creator"))) {
         return "Cannot view version as you are not the owner\n";
       }
+    } catch (SQLException e) {
+      return "Project-ID doesn't exist";
+    }
+    try {
       GetProjectVersions.clearParameters();
       GetProjectVersions.setInt(1, projectID);
       ResultSet versions = GetProjectVersions.executeQuery();
