@@ -590,6 +590,11 @@ public class Query {
       // print out project versions
       System.out.println("Project-ID: " + projectID);
       System.out.println("Version\tMessage");
+      while (versions.next()) {
+        int v = versions.getInt("version");
+        String m = versions.getString("message");
+        System.out.println(v + "\t" + m);
+      }
     } catch (SQLException e) {
       System.out.println(e);
     }
