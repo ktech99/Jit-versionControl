@@ -584,6 +584,8 @@ public class Query {
       GetProjectVersions.setInt(1, projectID);
       ResultSet versions = GetProjectVersions.executeQuery();
       // print out project versions
+      System.out.println("Project-ID: " + projectID);
+      System.out.println("Version\tMessage");
     } catch (SQLException e) {
       System.out.println(e);
     }
